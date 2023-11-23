@@ -1,7 +1,8 @@
 // admin-menu-details.component.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Menu } from '../../models/menu.model';
 
 @Component({
   selector: 'app-admin-menu-details',
@@ -9,36 +10,23 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./admin-menu-details.component.css']
 })
 export class AdminMenuDetailsComponent implements OnInit {
-  adminMenu: any; // Replace 'any' with the actual type of your admin menu data
-  isEditing = false;
+  @Input() menu!: Menu;
 
-  constructor(private route: ActivatedRoute) { }
+  isEditing = false;
+  editedMenu!: Menu;
 
   ngOnInit() {
-    // Fetch initial admin menu details
-    this.route.params.subscribe(params => {
-      const adminMenuId = +params['id']; // Convert the parameter to a number
-      this.adminMenu = this.fetchAdminMenuDetails(adminMenuId);
-    });
-  }
-
-  fetchAdminMenuDetails(adminMenuId: number): any {
-    // Example data, replace with your actual data fetching logic
-    return { id: adminMenuId, name: `Menu ${adminMenuId}` };
+    this.editedMenu = { ...this.menu }; // Create a copy for editing
   }
 
   toggleEditMode() {
-    this.isEditing = true;
+    this.isEditing = !this.isEditing;
+    this.editedMenu = { ...this.menu }; // Reset the edited values
   }
 
   saveChanges() {
-    // Save changes logic (e.g., send request to update the server)
-    // After saving, switch back to display mode
-    this.isEditing = false;
-  }
-
-  cancelEdit() {
-    // Cancel edit and switch back to display mode without saving changes
+    // Save the changes (e.g., send to the server)
+    this.menu = { ...this.editedMenu };
     this.isEditing = false;
   }
 }

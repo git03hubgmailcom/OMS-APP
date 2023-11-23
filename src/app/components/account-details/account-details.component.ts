@@ -26,7 +26,8 @@ export class AccountDetailsComponent implements OnInit {
         learnersId: '123456789',
         contactNumber: '123-456-7890',
         gradeLevel: '12',
-        section: 'A'
+        section: 'A',
+        role: 'admin'
       },
       {
         id: 2,
@@ -38,7 +39,8 @@ export class AccountDetailsComponent implements OnInit {
         learnersId: '987654321',
         contactNumber: '987-654-3210',
         gradeLevel: '11',
-        section: 'B'
+        section: 'B',
+        role: 'user'
       }
     ];
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -6,30 +7,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-  username: string = '';
-  password: string = '';
-  firstName: string = '';
-  middleName: string = '';
-  lastName: string = '';
-  address: string = '';
-  learnersId: string = '';
-  contactNumber: string = '';
-  gradeLevel: string = '';
-  section: string = '';
+  registrationForm: FormGroup;
 
-  register() {
-    // Add your registration logic here
-    console.log('Registration data:', {
-      username: this.username,
-      password: this.password,
-      firstName: this.firstName,
-      middleName: this.middleName,
-      lastName: this.lastName,
-      address: this.address,
-      learnersId: this.learnersId,
-      contactNumber: this.contactNumber,
-      gradeLevel: this.gradeLevel,
-      section: this.section
+  constructor(private fb: FormBuilder) {
+    this.registrationForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      firstName: ['', Validators.required],
+      middleName: [''],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      learnersId: ['', Validators.required],
+      contactNumber: ['', Validators.required],
+      gradeLevel: ['', Validators.required],
+      section: ['', Validators.required],
     });
+  }
+
+  onSubmit() {
+    // Handle form submission logic here
+    console.log(this.registrationForm.value);
   }
 }

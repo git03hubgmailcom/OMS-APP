@@ -1,1 +1,12 @@
-<p>admin-order-details works!</p>
+<!-- order-details.component.html -->
+
+<div class="order-details">
+    <h2>Order Details</h2>
+
+    <p><strong>ID:</strong> {{ order.id }}</p>
+    <p><strong>Customer Name:</strong> {{ order.customerName }}</p>
+    <p><strong>Product:</strong> {{ order.product }}</p>
+    <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+    <p><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>
+    <p><strong>Status:</strong> {{ order.status }}</p>
+</div>

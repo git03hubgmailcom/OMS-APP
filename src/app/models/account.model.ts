@@ -9,4 +9,5 @@ export interface Account {
     contactNumber: string | undefined;
     gradeLevel: string | undefined;
     section: string | undefined;
+    role: string | undefined;
 }

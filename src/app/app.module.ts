@@ -26,6 +26,11 @@ import { AdminOrderDetailsComponent } from './components/admin-order-details/adm
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MenuListComponent } from './components/menu-list/menu-list.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
+import { MenuDetailsComponent } from './components/menu-details/menu-details.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,11 @@ import { OrderConfirmationComponent } from './components/order-confirmation/orde
     AdminOrderDetailsComponent,
     CartComponent,
     CheckoutComponent,
-    OrderConfirmationComponent
+    OrderConfirmationComponent,
+    MenuListComponent,
+    OrderListComponent,
+    MenuDetailsComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +59,8 @@ import { OrderConfirmationComponent } from './components/order-confirmation/orde
     NoopAnimationsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

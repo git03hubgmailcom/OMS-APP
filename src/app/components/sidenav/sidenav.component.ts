@@ -13,10 +13,13 @@ export class SidenavComponent {
 
   isSidenavOpen: boolean = false;
   isLoggedInUser: boolean = false;
+  role: string = '';
 
   constructor(private renderer: Renderer2, private el: ElementRef, public authService: AuthService) {
     if (this.authService.isLoggedInUser()) {
       this.isLoggedInUser = true;
+      this.role = this.authService.getRole();
+      console.log(this.role);
     }
   }
 

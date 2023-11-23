@@ -1,0 +1,14 @@
+/* menu-details.component.css */
+
+.menu-details {
+    text-align: center;
+}
+
+.edit-form {
+    text-align: left;
+    padding: 10px;
+}
+
+.full-width {
+    width: 100%;
+}
