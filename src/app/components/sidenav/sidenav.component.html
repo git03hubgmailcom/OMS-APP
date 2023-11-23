@@ -4,7 +4,7 @@
     <mat-sidenav #sidenav *ngIf="isLoggedInUser">
         <!-- Add your sidenav content here -->
         <mat-nav-list>
-            <a mat-list-item routerLink="/accounts" *ngIf="role === 'admin'" (click)="toggleSidenav()">Accounts
+            <a mat-list-item routerLink="/accounts" (click)="toggleSidenav()">Accounts
                 {{role}}</a>
             <a mat-list-item routerLink="/admin-menu-list" (click)="toggleSidenav()">Menu{{role}}</a>
             <a mat-list-item routerLink="/admin-order-list" (click)="toggleSidenav()">Orders</a>
