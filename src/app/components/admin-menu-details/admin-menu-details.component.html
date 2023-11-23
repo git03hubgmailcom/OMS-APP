@@ -1,0 +1,28 @@
+<!-- admin-menu-details.component.html -->
+
+<div>
+    <div>
+        <h2>Admin Menu Details</h2>
+    </div>
+
+    <div *ngIf="!isEditing; else editMode">
+        <!-- Display details of the selected admin menu -->
+        <p>ID: {{ adminMenu?.id }}</p>
+        <p>Name: {{ adminMenu?.name }}</p>
+        <!-- Add more details as needed -->
+        <button mat-button (click)="toggleEditMode()">Edit</button>
+    </div>
+
+    <ng-template #editMode>
+        <!-- Edit mode with Angular Material input fields -->
+        <mat-form-field>
+            <mat-label>Name:</mat-label>
+            <input matInput [(ngModel)]="adminMenu.name" />
+        </mat-form-field>
+        <!-- Add more Angular Material input fields for editing as needed -->
+
+        <!-- Angular Material buttons -->
+        <button mat-button (click)="saveChanges()">Save</button>
+        <button mat-button (click)="cancelEdit()">Cancel</button>
+    </ng-template>
+</div>

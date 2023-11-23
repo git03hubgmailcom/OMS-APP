@@ -1,0 +1,29 @@
+<!-- navigation.component.html -->
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav *ngIf="isLoggedInUser">
+        <!-- Add your sidenav content here -->
+        <mat-nav-list>
+            <a mat-list-item routerLink="/accounts" (click)="toggleSidenav()">Accounts</a>
+            <a mat-list-item routerLink="/admin-menu-list" (click)="toggleSidenav()">Menu</a>
+            <a mat-list-item routerLink="/admin-order-list" (click)="toggleSidenav()">Orders</a>
+            <a mat-list-item routerLink="/logout" (click)="toggleSidenav()">Logout</a>
+            <!-- Add more links as needed -->
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+        <!-- Your main content goes here -->
+        <mat-toolbar color="primary">
+            <button mat-icon-button *ngIf="isLoggedInUser" (click)="toggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Your App Name</span>
+        </mat-toolbar>
+
+        <!-- Add your page content here -->
+        <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
