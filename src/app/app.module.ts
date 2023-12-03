@@ -31,7 +31,9 @@ import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { MenuDetailsComponent } from './components/menu-details/menu-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
-
+import { MyCollectionsComponent } from './components/my-collections/my-collections.component';
+import { MyCollectOrdersComponent } from './components/my-collect-orders/my-collect-orders.component';
+import { MyCollectOrderDetailsComponent } from './components/my-collect-order-details/my-collect-order-details.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,10 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     MenuListComponent,
     OrderListComponent,
     MenuDetailsComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    MyCollectionsComponent,
+    MyCollectOrdersComponent,
+    MyCollectOrderDetailsComponent
   ],
   imports: [
     BrowserModule,
