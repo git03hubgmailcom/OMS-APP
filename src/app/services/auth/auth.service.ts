@@ -25,6 +25,14 @@ export class AuthService {
       return true;
     }
 
+    if (username === 'collector' && password === 'password') {
+      // Set some kind of authentication token, for example
+      localStorage.setItem('token', 'your_token');
+      localStorage.setItem('role', 'collector');
+      this.isLoggedIn = true;
+      return true;
+    }
+
     return false;
   }
 

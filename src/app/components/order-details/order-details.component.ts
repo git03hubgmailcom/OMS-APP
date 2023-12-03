@@ -35,6 +35,9 @@ export class OrderDetailsComponent {
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
+    }else{
+      this.isLoggedInUser = true;
+      this.role = authService.getRole();
     }
   }
 

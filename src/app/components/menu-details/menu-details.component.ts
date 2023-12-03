@@ -34,6 +34,9 @@ export class MenuDetailsComponent {
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder ) { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
+    }else{
+      this.isLoggedInUser = true;
+      this.role = authService.getRole();
     }
 
     this.menuDetailsForm = this.fb.group({

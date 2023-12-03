@@ -56,6 +56,9 @@ export class MenuListComponent {
   constructor(private authService: AuthService, private router: Router ) { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
+    }else{
+      this.isLoggedInUser = true;
+      this.role = authService.getRole();
     }
   }
 
