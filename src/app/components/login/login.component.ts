@@ -13,7 +13,11 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {
     if (this.authService.isLoggedInUser()) {
-      this.router.navigate(['/accounts']);
+      if(this.authService.getRole() == "admin"){
+        this.router.navigate(['/admin-menu-list']);
+      }else{
+        this.router.navigate(['/menu-list']);
+      }
     }
   }
 
