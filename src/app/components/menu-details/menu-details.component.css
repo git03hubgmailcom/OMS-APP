@@ -1,0 +1,32 @@
+/* app.component.css */
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    /* Adjust the height based on your requirements */
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px; /* Adjust margin as needed */
+}
+
+.mat-form-field {
+    flex: 1;
+    margin-right: 16px; /* Adjust margin as needed */
+}

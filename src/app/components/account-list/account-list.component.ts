@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Account } from '../../models/account.model';
 import Swal from 'sweetalert2';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-account-list',
@@ -10,13 +11,32 @@ import Swal from 'sweetalert2';
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
+  isSidenavOpen: boolean = false;
+  isLoggedInUser: boolean = false;
+  role: string = '';
 
   constructor(private authService: AuthService, private router: Router) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
+    }else{
+      this.isLoggedInUser = true;
+      this.role = authService.getRole();
     }
    
+  }
+
+  toggleSidenav() {
+    if (this.sidenav) {
+      this.sidenav.toggle();
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.toggleSidenav();
+    this.isLoggedInUser = false;
   }
 
   accounts: Account[] = [

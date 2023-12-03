@@ -1,8 +1,11 @@
 // admin-menu-list.component.ts
 
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Menu } from '../../models/menu.model';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-admin-menu-list',
@@ -10,7 +13,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./admin-menu-list.component.css']
 })
 export class AdminMenuListComponent {
-  // Dummy admin menu data, replace it with your actual data
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  isSidenavOpen: boolean = false;
+  isLoggedInUser: boolean = false;
+  role: string = '';
+
   adminMenus : Menu[] = [
     {
       id: 1,
@@ -34,6 +42,24 @@ export class AdminMenuListComponent {
       stock: 30
     }
   ];
+
+  toggleSidenav() {
+    if (this.sidenav) {
+      this.sidenav.toggle();
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.toggleSidenav();
+    this.isLoggedInUser = false;
+  }
+
+  constructor(private authService: AuthService, private router: Router ) { 
+    if (!authService.isLoggedInUser()) {
+      router.navigate(['/login']);
+    }
+  }
 
   displayedColumns: string[] = ['id', 'name', 'price', 'stock', 'actions'];
 

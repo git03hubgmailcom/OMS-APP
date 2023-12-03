@@ -1,0 +1,11 @@
+
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    /* Adjust the height based on your requirements */
+}

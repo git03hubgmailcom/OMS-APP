@@ -1,1 +1,110 @@
-<p>checkout works!</p>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+        <!-- Add your sidenav content here -->
+        <mat-nav-list>
+            <a mat-list-item routerLink="/my-account" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">My Account</a>
+            <a mat-list-item  routerLink="/menu-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Menu</a>
+            <a mat-list-item routerLink="/order-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Orders</a>
+            <a mat-list-item routerLink="/cart" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Cart</a>
+
+            <a mat-list-item routerLink="/my-collections" *ngIf="role=='collector'" (click)="toggleSidenav()">Collections</a>
+
+            <a mat-list-item routerLink="/login" (click)="logout()">Logout</a>
+            <!-- Add more links as needed -->
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+
+        <!-- Your main content goes here -->
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="toggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Ordering Management System</span>
+        </mat-toolbar>
+
+        <div class="center-container">
+            <mat-card style="width: 60vw;margin: auto;margin-top: 3rem;">
+                <mat-card-header>
+                <mat-card-title>Order Details</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <br>
+                <div>
+                    <p><strong>Order ID:</strong> {{ 1 }}</p>
+                    <p><strong>Order Date:</strong> {{ 1 }}</p>
+                    <p><strong>Status:</strong> {{ 1 }}</p>
+                    <p><strong>Customer Details</strong> </p>
+                    <p><strong>Full Name:</strong> </p>
+                    <p><strong>Learner's ID:</strong> </p>
+                    <p><strong>School Year:</strong> </p>
+                    <p><strong>Grade Level:</strong> </p>
+                    <p><strong>Section:</strong> </p>
+                    <p><strong>Other Order Details</strong> </p>
+                    <p><strong>Payment Method:</strong> </p>
+                    <p><strong>Payment Date:</strong> </p>
+                    <p><strong>Payment Reference No.:</strong> </p>
+                    <p><strong>Claimed Date:</strong> </p>
+                    <p><strong>Total Amount:</strong> </p>
+                </div>
+                <div>
+                    <p><strong>Order Items</strong></p>
+                    <div class="mat-elevation-z8" style="">
+                        <mat-table [dataSource]="order.items" class="mat-elevation-z8">
+                
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef>Menu Name</mat-header-cell>
+                                <mat-cell *matCellDef="let order">{{ order.items.name }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="price">
+                                <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+                                <mat-cell *matCellDef="let order">{{ order.items.price }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="quantity">
+                                <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+                                <mat-cell *matCellDef="let order">{{ order.items.quantity }}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="totalPrice">
+                                <mat-header-cell *matHeaderCellDef>Sub total</mat-header-cell>
+                                <mat-cell *matCellDef="let order">{{ order.items.totalPrice }}</mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                        </mat-table>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div class="form-group">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Payment Method</mat-label>
+                            <select matNativeControl required>
+                                <option value="1">GCash - Reference no.</option>
+                                <option value="2">Cash via collector</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="fill">
+                            <mat-label>GCash reference number:</mat-label>
+                            <input matInput type="text" placeholder="Enter your gcash reference no.">
+                        </mat-form-field>
+                    </div>
+                </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" style="margin: 0.5rem;" (click)="submitOrder()">Submit</button>
+                    <button mat-button color="basic" routerLink="/cart" >Back to Cart</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

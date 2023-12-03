@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../../models/account.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-account-details',
@@ -9,10 +11,37 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./account-details.component.css']
 })
 export class AccountDetailsComponent implements OnInit {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  isSidenavOpen: boolean = false;
+  isLoggedInUser: boolean = false;
+  role: string = '';
+
   accountDetailsForm: FormGroup;
   account: Account | undefined | any;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  toggleSidenav() {
+    if (this.sidenav) {
+      this.sidenav.toggle();
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.toggleSidenav();
+    this.isLoggedInUser = false;
+  }
+
+  constructor(private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+    if (!authService.isLoggedInUser()) {
+      router.navigate(['/login']);
+    }else{
+      this.isLoggedInUser = true;
+      this.role = authService.getRole();
+    }
+
+    console.log("role",this.role);
+
     this.accountDetailsForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -26,6 +55,8 @@ export class AccountDetailsComponent implements OnInit {
       gradeLevel: ['', Validators.required],
       section: ['', Validators.required],
     });
+
+    
   }
 
   onSubmit() {

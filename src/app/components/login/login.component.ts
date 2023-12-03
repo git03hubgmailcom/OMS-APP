@@ -21,7 +21,12 @@ export class LoginComponent {
     const loginSuccessful = this.authService.login(this.username, this.password);
 
     if (loginSuccessful) {
-      this.router.navigate(['/accounts']);
+      if(this.authService.getRole() == "admin"){
+        this.router.navigate(['/admin-menu-list']);
+      }else{
+        this.router.navigate(['/menu-list']);
+      }
+
     } else {
       console.log("login failed");
     }

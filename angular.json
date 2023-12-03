@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "oms-frontend:build:production"
+              "buildTarget": "oms-frontend:build:production"
             },
             "development": {
-              "browserTarget": "oms-frontend:build:development"
+              "buildTarget": "oms-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "oms-frontend:build"
+            "buildTarget": "oms-frontend:build"
           }
         },
         "test": {

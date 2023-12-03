@@ -1,94 +1,127 @@
-<div class="center-container" style="margin: 1rem auto; max-width:90vw;">
-    
-    <form [formGroup]="accountDetailsForm" (ngSubmit)="onSubmit()">
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+        <!-- Add your sidenav content here -->
+        <mat-nav-list>
+            <a mat-list-item routerLink="/accounts" *ngIf="role=='admin'" (click)="toggleSidenav()">Accounts</a>
+            <a mat-list-item  routerLink="/admin-menu-list" *ngIf="role=='admin'" (click)="toggleSidenav()">Menu</a>
+            <a mat-list-item routerLink="/admin-order-list" *ngIf="role=='admin'" (click)="toggleSidenav()">Orders</a>
 
-        <div class="center-title" style="margin-bottom: 2rem;">
-            <h1>Account Details Form</h1>
+            <a mat-list-item routerLink="/my-account" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">My Account</a>
+            <a mat-list-item  routerLink="/menu-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Menu</a>
+            <a mat-list-item routerLink="/order-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Orders</a>
+            <a mat-list-item routerLink="/cart" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Cart</a>
+
+            <a mat-list-item routerLink="/my-collections" *ngIf="role=='collector'" (click)="toggleSidenav()">Collections</a>
+
+            <a mat-list-item routerLink="/login" (click)="logout()">Logout</a>
+            <!-- Add more links as needed -->
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content >
+
+        <!-- Your main content goes here -->
+        <mat-toolbar color="primary">
+            <button mat-icon-button (click)="toggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Ordering Management System</span>
+        </mat-toolbar>
+
+        <div class="center-container" style="margin: 1rem auto; max-width:90vw;">
+            
+            <form [formGroup]="accountDetailsForm" (ngSubmit)="onSubmit()">
+
+                <div class="center-title" style="margin-bottom: 2rem;">
+                    <h1>Account Details Form</h1>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" placeholder="Enter your username">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Enter your password">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" placeholder="Confirm your password">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>First Name</mat-label>
+                        <input matInput type="text" placeholder="Enter your first name">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput type="text" placeholder="Enter your middle name">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput type="text" placeholder="Enter your last name">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Learner's ID</mat-label>
+                        <input matInput type="text" placeholder="Enter your learner's id">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Contact Number</mat-label>
+                        <input matInput type="text" placeholder="Enter your contact number">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Grade Level</mat-label>
+                        <select matNativeControl required>
+                            <option value="1">Grade 1</option>
+                            <option value="2">Grade 2</option>
+                            <option value="3">Grade 3</option>
+                            <option value="4">Grade 4</option>
+                            <option value="5">Grade 5</option>
+                            <option value="6">Grade 6</option>
+                            <option value="7">Grade 7</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Section</mat-label>
+                        <input matInput type="text" placeholder="Enter your section">
+                    </mat-form-field>
+                </div>
+
+                <button mat-raised-button color="primary" style="margin: 0.5rem;" type="submit">Save</button>
+                <button mat-raised-button style="margin: 0.5rem;" type="submit" routerLink="/accounts">Back</button>
+            </form>
+
         </div>
 
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Username</mat-label>
-                <input matInput type="text" placeholder="Enter your username">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" placeholder="Enter your password">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Confirm Password</mat-label>
-                <input matInput type="password" placeholder="Confirm your password">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>First Name</mat-label>
-                <input matInput type="text" placeholder="Enter your first name">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Middle Name</mat-label>
-                <input matInput type="text" placeholder="Enter your middle name">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Last Name</mat-label>
-                <input matInput type="text" placeholder="Enter your last name">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Learner's ID</mat-label>
-                <input matInput type="text" placeholder="Enter your learner's id">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Contact Number</mat-label>
-                <input matInput type="text" placeholder="Enter your contact number">
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Grade Level</mat-label>
-                <select matNativeControl required>
-                    <option value="1">Grade 1</option>
-                    <option value="2">Grade 2</option>
-                    <option value="3">Grade 3</option>
-                    <option value="4">Grade 4</option>
-                    <option value="5">Grade 5</option>
-                    <option value="6">Grade 6</option>
-                    <option value="7">Grade 7</option>
-                    <option value="8">Grade 8</option>
-                    <option value="9">Grade 9</option>
-                    <option value="10">Grade 10</option>
-                </select>
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="fill">
-                <mat-label>Section</mat-label>
-                <input matInput type="text" placeholder="Enter your section">
-            </mat-form-field>
-        </div>
-
-        <button mat-raised-button color="primary" style="margin: 0.5rem;" type="submit">Save</button>
-        <button mat-raised-button style="margin: 0.5rem;" type="submit" routerLink="/accounts">Back</button>
-    </form>
-
-</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

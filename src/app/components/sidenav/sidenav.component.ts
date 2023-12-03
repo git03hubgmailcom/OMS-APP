@@ -19,7 +19,7 @@ export class SidenavComponent {
     if (this.authService.isLoggedInUser()) {
       this.isLoggedInUser = true;
       this.role = this.authService.getRole();
-      console.log(this.role);
+      console.log("Role: ", this.role);
     }
   }
 
@@ -28,6 +28,12 @@ export class SidenavComponent {
     if (this.sidenav) {
       this.sidenav.toggle();
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.toggleSidenav();
+    this.isLoggedInUser = false;
   }
 
 }

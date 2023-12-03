@@ -15,18 +15,22 @@ import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { MenuDetailsComponent } from './components/menu-details/menu-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
-
+import { MyCollectionsComponent } from './components/my-collections/my-collections.component';
+import { MyCollectOrdersComponent } from './components/my-collect-orders/my-collect-orders.component';
+import { MyCollectOrderDetailsComponent } from './components/my-collect-order-details/my-collect-order-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'accounts', component: AccountListComponent },
   { path: 'account-details/:id', component: AccountDetailsComponent },
+  { path: 'my-account', component: AccountDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'admin-menu-list', component: AdminMenuListComponent },
   { path: 'admin-order-list', component: AdminOrderListComponent },
   { path: 'admin-menu-details/:id', component: AdminMenuDetailsComponent },
-  { path: 'admin-order-details/new', component: AdminOrderDetailsComponent },
+  { path: 'admin-menu-details/new', component: AdminMenuDetailsComponent },
+  { path: 'admin-order-details/:id', component: AdminOrderDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },
@@ -34,6 +38,9 @@ const routes: Routes = [
   { path: 'order-list', component: OrderListComponent },
   { path: 'menu-details/:id', component: MenuDetailsComponent },
   { path: 'order-details/:id', component: OrderDetailsComponent },
+  { path: 'my-collections', component: MyCollectionsComponent },
+  { path: 'my-collect-orders/:id', component: MyCollectOrdersComponent },
+  { path: 'my-collect-order-details/:id', component: MyCollectOrderDetailsComponent },
 ];
 
 @NgModule({

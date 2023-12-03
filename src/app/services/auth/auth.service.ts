@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
   private isLoggedIn = false;
-  private role = '';
 
   login(username: string, password: string): boolean {
     // Replace this with your actual login logic
@@ -13,23 +12,24 @@ export class AuthService {
     if (username === 'admin' && password === 'password') {
       // Set some kind of authentication token, for example
       localStorage.setItem('token', 'your_token');
+      localStorage.setItem('role', 'admin');
       this.isLoggedIn = true;
-      this.role = 'admin';
       return true;
     }
 
-    if (username === 'user' && password === 'password') {
+    if (username === 'customer' && password === 'password') {
       // Set some kind of authentication token, for example
       localStorage.setItem('token', 'your_token');
+      localStorage.setItem('role', 'customer');
       this.isLoggedIn = true;
-      this.role = 'user';
       return true;
     }
+
     return false;
   }
 
   getRole(): string {
-    return this.role;
+    return localStorage.getItem('role') || '';
   }
 
   logout() {

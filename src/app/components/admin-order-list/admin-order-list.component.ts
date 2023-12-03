@@ -1,13 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Order } from '../../models/order.model';
-import { Account } from '../../models/account.model';
-
-@Component({
-  selector: 'app-admin-order-list',
-  templateUrl: './admin-order-list.component.html',
-  styleUrls: ['./admin-order-list.component.css']
-})
-
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-admin-order-list',
@@ -15,10 +10,28 @@ import { Account } from '../../models/account.model';
   styleUrls: ['./admin-order-list.component.css']
 })
 export class AdminOrderListComponent {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  isSidenavOpen: boolean = false;
+  isLoggedInUser: boolean = false;
+  role: string = '';
+
   orders: Order[] = [
     { 
       id: 1, 
-      customer: { id: 1, name: 'John Doe', username: '', firstName: '', middleName: '', lastName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '' } as unknown as Account, 
+      customer: { 
+        id: 1, 
+        username: '', 
+        firstName: '', 
+        middleName: '', 
+        lastName: '', 
+        learnersId: '', 
+        contactNumber: '', 
+        gradeLevel: '', 
+        section: '', 
+        school_year: '', 
+        role: '' 
+      }, 
       items: [],
       totalPrice: 30, 
       status: 'pending',
@@ -30,7 +43,19 @@ export class AdminOrderListComponent {
     },
     { 
       id: 2, 
-      customer: { id: 2, name: 'Jane Smith', username: '', firstName: '', middleName: '', lastName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '' } as unknown as Account, 
+      customer: { 
+        id: 2, 
+        username: '', 
+        firstName: '', 
+        middleName: '', 
+        lastName: '', 
+        learnersId: '', 
+        contactNumber: '', 
+        gradeLevel: '', 
+        section: '', 
+        school_year: '', 
+        role: '' 
+      }, 
       items: [],
       totalPrice: 50, 
       status: 'paid',
@@ -42,7 +67,19 @@ export class AdminOrderListComponent {
     },
     { 
       id: 3, 
-      customer: { id: 2, name: 'Jane Smith', username: '', firstName: '', middleName: '', lastName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '' } as unknown as Account, 
+      customer: { 
+        id: 3, 
+        username: '', 
+        firstName: '', 
+        middleName: '', 
+        lastName: '', 
+        learnersId: '', 
+        contactNumber: '', 
+        gradeLevel: '', 
+        section: '', 
+        school_year: '', 
+        role: '' 
+      }, 
       items: [],
       totalPrice: 50, 
       status: 'completed',
@@ -54,5 +91,30 @@ export class AdminOrderListComponent {
     },
   ];
 
-  displayedColumns: string[] = ['id', 'customer', 'totalPrice', 'status', 'actions'];
+  toggleSidenav() {
+    if (this.sidenav) {
+      this.sidenav.toggle();
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.toggleSidenav();
+    this.isLoggedInUser = false;
+  }
+
+  constructor(private authService: AuthService, private router: Router) { 
+    if (!authService.isLoggedInUser()) {
+      router.navigate(['/login']);
+    }
+  }
+
+  displayedColumns: string[] = ['id', 'customer', 'totalPrice', 'status', 'date', 'actions'];
+  searchText: string = '';
+  
+  get filteredOrders() {
+    return this.orders.filter(order =>
+      order.id && order.id.toString().includes(this.searchText.toLowerCase())
+    );
+  }
 }
