@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Order } from '../../models/order.model';
+import { Account } from '../../models/account.model';
 
 @Component({
   selector: 'app-admin-order-details',
@@ -7,6 +8,17 @@ import { Order } from '../../models/order.model';
   styleUrls: ['./admin-order-details.component.css']
 })
 export class AdminOrderDetailsComponent {
-  //@Input() order!: Order;
-  order: Order = { id: 1, customerName: 'John Doe', product: 'Widget', quantity: 2, totalPrice: 30, status: 'pending' };
+  
+  order: Order = { 
+    id: 3, 
+    customer: { id: 2, name: 'Jane Smith', username: '', firstName: '', middleName: '', lastName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '' } as unknown as Account, 
+    items: [],
+    totalPrice: 50, 
+    status: 'completed',
+    paymentMethod: '',
+    paymentReferenceNumber: '',
+    paymentDateTime: new Date(),
+    claimedDateTime: new Date(),
+    createdDateTime: new Date()
+  };
 }

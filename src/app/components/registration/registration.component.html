@@ -1,49 +1,93 @@
-<!-- app.component.html -->
+<div class="center-container" style="margin: 1rem auto; max-width:90vw;">
+    
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
 
-<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-        <input matInput placeholder="Username" formControlName="username">
-    </mat-form-field>
+        <div class="center-title" style="margin-bottom: 2rem;">
+            <h1>Account Registration Form</h1>
+        </div>
 
-    <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" placeholder="Enter your username">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Enter your password">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="First Name" formControlName="firstName">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" placeholder="Confirm your password">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Middle Name" formControlName="middleName">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" placeholder="Enter your first name">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Last Name" formControlName="lastName">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Middle Name</mat-label>
+                <input matInput type="text" placeholder="Enter your middle name">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Address" formControlName="address">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" placeholder="Enter your last name">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Learner's ID" formControlName="learnersId">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Learner's ID</mat-label>
+                <input matInput type="text" placeholder="Enter your learner's id">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Contact Number" formControlName="contactNumber">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="text" placeholder="Enter your contact number">
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Grade Level" formControlName="gradeLevel">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Grade Level</mat-label>
+                <select matNativeControl required>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                </select>
+            </mat-form-field>
+        </div>
 
-    <mat-form-field>
-        <input matInput placeholder="Section" formControlName="section">
-    </mat-form-field>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Section</mat-label>
+                <input matInput type="text" placeholder="Enter your section">
+            </mat-form-field>
+        </div>
 
-    <button mat-raised-button color="primary" type="submit">Register</button>
-</form>
+        <button mat-raised-button color="primary" type="submit">Register</button>
+    </form>
+
+</div>

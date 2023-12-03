@@ -1,29 +1,94 @@
-<div class="min-h-screen bg-gray-100 p-6">
-    <h1 class="text-2xl font-semibold mb-6">Account Details</h1>
+<div class="center-container" style="margin: 1rem auto; max-width:90vw;">
+    
+    <form [formGroup]="accountDetailsForm" (ngSubmit)="onSubmit()">
 
-    <form (ngSubmit)="saveChanges()">
-        <div class="mb-4">
-            <label for="username" class="text-sm block font-semibold">Username</label>
-            <input type="text" id="username" name="username" [(ngModel)]="editedAccount.username"
-                class="w-full p-2 border rounded-md focus:ring focus:ring-blue-200" required>
+        <div class="center-title" style="margin-bottom: 2rem;">
+            <h1>Account Details Form</h1>
         </div>
-        <div class="mb-4">
-            <label for="email" class="text-sm block font-semibold">Email</label>
-            <input type="email" id="email" name="email" [(ngModel)]="editedAccount.firstName"
-                class="w-full p-2 border rounded-md focus:ring focus:ring-blue-200" required>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" placeholder="Enter your username">
+            </mat-form-field>
         </div>
-        <div class="mb-4">
-            <label for="role" class="text-sm block font-semibold">Role</label>
-            <input type="text" id="role" name="role" [(ngModel)]="editedAccount.lastName"
-                class="w-full p-2 border rounded-md focus:ring focus:ring-blue-200" required>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Enter your password">
+            </mat-form-field>
         </div>
-        <!-- Add more fields for additional account details -->
-        <div class="mb-4">
-            <button type="submit"
-                class="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition">Save</button>
-            <button (click)="cancelEdit()"
-                class="ml-4 px-2 py-1 rounded-md bg-gray-300 text-gray-700 font-semibold hover:bg-gray-400 transition">Cancel</button>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" placeholder="Confirm your password">
+            </mat-form-field>
         </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" placeholder="Enter your first name">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Middle Name</mat-label>
+                <input matInput type="text" placeholder="Enter your middle name">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" placeholder="Enter your last name">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Learner's ID</mat-label>
+                <input matInput type="text" placeholder="Enter your learner's id">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="text" placeholder="Enter your contact number">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Grade Level</mat-label>
+                <select matNativeControl required>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                </select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>Section</mat-label>
+                <input matInput type="text" placeholder="Enter your section">
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" style="margin: 0.5rem;" type="submit">Save</button>
+        <button mat-raised-button style="margin: 0.5rem;" type="submit" routerLink="/accounts">Back</button>
     </form>
 
 </div>

@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'admin-menu-list', component: AdminMenuListComponent },
   { path: 'admin-order-list', component: AdminOrderListComponent },
   { path: 'admin-menu-details/:id', component: AdminMenuDetailsComponent },
-  { path: 'admin-order-details/:id', component: AdminOrderDetailsComponent },
+  { path: 'admin-order-details/new', component: AdminOrderDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },

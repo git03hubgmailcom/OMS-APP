@@ -32,6 +32,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { MenuDetailsComponent } from './components/menu-details/menu-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

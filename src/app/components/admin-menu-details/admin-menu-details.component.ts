@@ -1,8 +1,10 @@
 // admin-menu-details.component.ts
 
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Menu } from '../../models/menu.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-admin-menu-details',
@@ -10,23 +12,35 @@ import { Menu } from '../../models/menu.model';
   styleUrls: ['./admin-menu-details.component.css']
 })
 export class AdminMenuDetailsComponent implements OnInit {
-  @Input() menu!: Menu;
+  menuDetailsForm: FormGroup;
+  account: Menu | undefined | any;
 
-  isEditing = false;
-  editedMenu!: Menu;
-
-  ngOnInit() {
-    this.editedMenu = { ...this.menu }; // Create a copy for editing
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+    this.menuDetailsForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      firstName: ['', Validators.required],
+      middleName: [''],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      learnersId: ['', Validators.required],
+      contactNumber: ['', Validators.required],
+      gradeLevel: ['', Validators.required],
+      section: ['', Validators.required],
+    });
   }
 
-  toggleEditMode() {
-    this.isEditing = !this.isEditing;
-    this.editedMenu = { ...this.menu }; // Reset the edited values
+  ngOnInit(): void {
+      this.route.params.subscribe(params => {
+        const id = +params['id']; 
+  
+      });
   }
 
-  saveChanges() {
-    // Save the changes (e.g., send to the server)
-    this.menu = { ...this.editedMenu };
-    this.isEditing = false;
+  onSubmit() {
+    // Handle form submission logic here
+    console.log(this.menuDetailsForm.value);
   }
+
 }

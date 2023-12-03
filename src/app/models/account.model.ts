@@ -4,10 +4,10 @@ export interface Account {
     firstName: string | undefined;
     middleName: string | undefined;
     lastName: string | undefined;
-    address: string | undefined;
     learnersId: string | undefined;
     contactNumber: string | undefined;
     gradeLevel: string | undefined;
     section: string | undefined;
+    school_year: string | undefined;
     role: string | undefined;
 }
