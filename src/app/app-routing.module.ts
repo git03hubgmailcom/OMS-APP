@@ -40,7 +40,8 @@ const routes: Routes = [
   { path: 'order-details/:id', component: OrderDetailsComponent },
   { path: 'my-collections', component: MyCollectionsComponent },
   { path: 'my-collect-orders/:id', component: MyCollectOrdersComponent },
-  { path: 'my-collect-order-details/:id', component: MyCollectOrderDetailsComponent },
+  { path: 'my-collect-orders/new', component: MyCollectOrdersComponent },
+  { path: 'my-collect-order-details/:collection_item_id', component: MyCollectOrderDetailsComponent },
 ];
 
 @NgModule({

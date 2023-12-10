@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
   selector: 'app-order-details',
@@ -20,6 +21,9 @@ export class OrderDetailsComponent {
 
   order: Order | undefined | any;
 
+  payment_reference: string = '';
+  payment_method: string = '';
+
   toggleSidenav() {
     if (this.sidenav) {
       this.sidenav.toggle();
@@ -32,46 +36,39 @@ export class OrderDetailsComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private orderService: OrderService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
+      if(this.authService.getRole() == "admin"){
+        router.navigate(['/login']);
+      }
     }
+
+
   }
 
   ngOnInit(): void {
 
     this.route.params.subscribe(params => {
       const id = +params['id']; 
-
+      this.getOrder(id);
     });
 
-    this.order = {
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    };
+  }
+
+  getOrder(id: number) {
+    this.orderService.getOrder(id).subscribe((order) => {
+      this.order = order;
+      console.log(this.order);
+      if(this.order.payments.length > 0){
+        this.payment_reference = this.order.payments[0].reference_number;
+        this.payment_method = this.order.payments[0].method;
+        console.log(this.payment_reference);
+      }
+    });
   }
 
   displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];
@@ -87,11 +84,20 @@ export class OrderDetailsComponent {
       confirmButtonText: "Yes, cancel it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Cancelled!",
-          text: "Order has been cancelled.",
-          icon: "success"
-        });
+        this.order.status = "cancelled";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Cancelled!",
+            text: "Order has been cancelled.",
+            icon: "success"
+          }).then((result) => {
+  
+          });
+        }
+        );
+        
       }
     });
   }
@@ -106,13 +112,21 @@ export class OrderDetailsComponent {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Order Submitted!',
-          'Your order has been submitted.',
-          'success'
-        ).then((result) => {
+        this.order.status = this.payment_method=="gcash_ref"?"paid":"pending";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire(
+            'Order Submitted!',
+            'Your order has been submitted.',
+            'success'
+          ).then((result) => {
+  
+          });
+        }
+        );
 
-        });
+        
       }/*  else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Order Cancelled',

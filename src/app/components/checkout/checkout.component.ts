@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { CartItem } from 'src/app/models/cart-item.model';
+import { CartItemsService } from '../../services/cart/cart-items.service';
+import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -20,6 +23,35 @@ export class CheckoutComponent {
 
   order: Order | undefined | any;
 
+  cartItems : CartItem[] = [];
+  account : Account | undefined | any;
+
+  payment_reference : string = "";
+  payment_method : string = "";
+
+  getCartItems(){
+    this.cartItemsService.getCartItems().subscribe((cartItems) => {
+      this.cartItems = cartItems;
+      console.log(this.cartItems);
+      console.log(this.getTotal(this.cartItems, 'total_price'));
+      if(this.cartItems.length == 0){
+        Swal.fire({
+          title: 'No items in cart!',
+          text: 'You have no items in your cart.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          this.router.navigate(['/menu-list']);
+        });
+      }
+    });
+  }
+
+  getTotal(data: CartItem[], columnName: keyof CartItem): number {
+    return data.reduce((acc, item) => acc + Number(item[columnName]), 0);
+  }
+
+
   toggleSidenav() {
     if (this.sidenav) {
       this.sidenav.toggle();
@@ -32,13 +64,24 @@ export class CheckoutComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, 
+    private router: Router, 
+    private authService: AuthService, 
+    private cartItemsService: CartItemsService, 
+    private orderService: OrderService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
+      if(this.authService.getRole() == "admin"){
+        router.navigate(['/login']);
+      }
     }
+
+    this.authService.getAccount().subscribe((account) => {
+      this.account = account;
+    });
   }
 
   submitOrder() {
@@ -51,22 +94,34 @@ export class CheckoutComponent {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Order Submitted!',
-          'Your order has been submitted.',
-          'success'
-        ).then((result) => {
-          this.router.navigate(['/order-details/3']);
-        });
-      }/*  else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Order Cancelled',
-          'Your order has not been submitted.',
-          'error'
-        ).then((result) => {
-          this.router.navigate(['/cart']);
-        });
-      } */
+        this.order = {
+          id: 0,
+          user_id: this.account.id,
+          customer: this.account,
+          items: this.cartItems,
+          total_price: this.getTotal(this.cartItems, 'total_price'),
+          status: this.payment_method == "gcash_ref" ? "paid" : "pending",
+          payment_method: this.payment_method,
+          payment_reference_number: this.payment_reference,
+          payment_dateTime: this.payment_method == "gcash_ref" ? new Date() : "",
+          claimed_dateTime: "",
+          created_dateTime: new Date()
+        };
+
+        this.orderService.createOrder(this.order).subscribe((order) => {
+          this.order = order;
+          console.log(this.order);
+          Swal.fire(
+            'Order Submitted!',
+            'Your order has been submitted.',
+            'success'
+          ).then((result) => {
+            this.router.navigate(['/order-details/3']);
+          });
+        }
+        );
+        
+      }
     });
   }
 
@@ -79,31 +134,10 @@ export class CheckoutComponent {
 
     });
 
-    this.order = {
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    };
+    this.getCartItems();
+
+
   }
 
-  displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];
+  displayedColumns: string[] = ['name', 'price', 'quantity', 'total_price'];
 }

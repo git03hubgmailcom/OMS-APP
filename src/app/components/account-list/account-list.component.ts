@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Account } from '../../models/account.model';
 import Swal from 'sweetalert2';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AccountService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-account-list',
@@ -17,13 +18,17 @@ export class AccountListComponent {
   isLoggedInUser: boolean = false;
   role: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {
+  accounts: Account[] = [];
+
+  constructor(private authService: AuthService, private router: Router, private accountService: AccountService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
     }
+
+    this.fetchAccounts();
    
   }
 
@@ -39,24 +44,14 @@ export class AccountListComponent {
     this.isLoggedInUser = false;
   }
 
-  accounts: Account[] = [
-    { id: 1, username: 'john_doe', firstName: 'John', lastName: 'Doe', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 2, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    { id: 3, username: 'jane_smith', firstName: 'Jane', lastName: 'Smith', middleName: '', learnersId: '', contactNumber: '', gradeLevel: '', section: '', school_year: '', role: '' },
-    // Add more accounts as needed
-  ];
+
+  fetchAccounts() {
+    this.accountService.getAccounts().subscribe((accounts: Account[]) => {
+      this.accounts = accounts;
+      console.log("Data from API: ", this.accounts);
+    });
+  }
+
 
   displayedColumns: string[] = ['learner_s_id', 'full_name', 'grade_level', 'section', 'school_year', 'actions'];
   searchText: string = '';
@@ -80,11 +75,16 @@ export class AccountListComponent {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Account has been deleted.",
-          icon: "success"
-        });
+        if(account.id){
+          this.accountService.deleteAccount(account.id).subscribe(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Account has been deleted.",
+              icon: "success"
+            });
+            this.fetchAccounts();
+          });
+        }
       }
     });
   }

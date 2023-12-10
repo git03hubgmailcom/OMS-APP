@@ -36,35 +36,35 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Name</mat-label>
-                        <input matInput type="text" placeholder="Enter menu name" disabled>
+                        <input matInput type="text" placeholder="Enter menu name" readonly formControlName="name">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Description</mat-label>
-                        <textarea matInput placeholder="Enter description" disabled></textarea>
+                        <textarea matInput placeholder="Enter description" readonly  formControlName="description"></textarea>
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Price</mat-label>
-                        <input matInput type="number" placeholder="Enter price" disabled>
+                        <input matInput type="number" placeholder="Enter price" readonly  formControlName="price">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Stock</mat-label>
-                        <input matInput type="text" placeholder="Enter stock" disabled>
+                        <input matInput type="text" placeholder="Enter stock" readonly formControlName="stock">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Qty. to avail</mat-label>
-                        <input matInput type="number" min="1" value="1">
+                        <input matInput type="number" min="1" value="1" formControlName="quantity">
                     </mat-form-field>
                 </div>
 

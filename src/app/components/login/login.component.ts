@@ -22,17 +22,25 @@ export class LoginComponent {
   }
 
   login() {
-    const loginSuccessful = this.authService.login(this.username, this.password);
+    const loginSuccessful = this.authService.login(this.username, this.password).subscribe(
+      res => {
+        console.log(res);
+        if(res.success == true){
+          
+          if(this.authService.getRole() == "admin"){
+            this.router.navigate(['/admin-menu-list']);
+          }else{
+            this.router.navigate(['/menu-list']);
+          }
+        }else{
+          console.log("login failed");
+        }
 
-    if (loginSuccessful) {
-      if(this.authService.getRole() == "admin"){
-        this.router.navigate(['/admin-menu-list']);
-      }else{
-        this.router.navigate(['/menu-list']);
+      },
+      err => {
+        console.log(err);
       }
+    );
 
-    } else {
-      console.log("login failed");
-    }
   }
 }

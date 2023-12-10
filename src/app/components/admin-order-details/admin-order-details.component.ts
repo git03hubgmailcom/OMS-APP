@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
   selector: 'app-admin-order-details',
@@ -32,7 +33,10 @@ export class AdminOrderDetailsComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, 
+    private router: Router, 
+    private authService: AuthService, 
+    private orderService: OrderService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }
@@ -42,34 +46,19 @@ export class AdminOrderDetailsComponent {
 
     this.route.params.subscribe(params => {
       const id = +params['id']; 
-
+      this.getOrder(id);
     });
 
-    this.order = {
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    };
+    
   }
+
+  getOrder(id: number) {
+    this.orderService.getOrder(id).subscribe((order) => {
+      this.order = order;
+      console.log(this.order);
+    });
+  }
+
 
   displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];
 
@@ -84,11 +73,18 @@ export class AdminOrderDetailsComponent {
       confirmButtonText: "Yes, cancel it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Cancelled!",
-          text: "Order has been cancelled.",
-          icon: "success"
-        });
+        this.order.status = "cancelled";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Cancelled!",
+            text: "Order has been cancelled.",
+            icon: "success"
+          });
+        }
+        );
+
       }
     });
   }
@@ -104,11 +100,17 @@ export class AdminOrderDetailsComponent {
       confirmButtonText: "Yes, reject it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Rejected!",
-          text: "Order has been rejected.",
-          icon: "success"
-        });
+        this.order.status = "rejected";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Rejected!",
+            text: "Order has been rejected.",
+            icon: "success"
+          });
+        }
+        );
       }
     });
   }
@@ -124,11 +126,18 @@ export class AdminOrderDetailsComponent {
       confirmButtonText: "Yes, accept it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Accepted!",
-          text: "Order has been accepted.",
-          icon: "success"
-        });
+        this.order.status = "accepted";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Accepted!",
+            text: "Order has been accepted.",
+            icon: "success"
+          });
+        }
+        );
+
       }
     });
   }
@@ -144,11 +153,17 @@ export class AdminOrderDetailsComponent {
       confirmButtonText: "Yes, make it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Updated!",
-          text: "Order has been made ready for pick up.",
-          icon: "success"
-        });
+        this.order.status = "ready-for-pickup";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Ready!",
+            text: "Order has been made ready for pick up.",
+            icon: "success"
+          });
+        }
+        );
       }
     });
   }
@@ -164,11 +179,17 @@ export class AdminOrderDetailsComponent {
       confirmButtonText: "Yes, complete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Completed!",
-          text: "Order has been completed.",
-          icon: "success"
-        });
+        this.order.status = "completed";
+        this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
+          this.getOrder(this.order.id);
+          console.log(this.order);
+          Swal.fire({
+            title: "Completed!",
+            text: "Order has been completed.",
+            icon: "success"
+          });
+        }
+        );
       }
     });
   }

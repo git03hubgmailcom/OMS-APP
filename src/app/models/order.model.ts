@@ -5,11 +5,11 @@ export interface Order {
     id: number;
     customer: Account;
     items: OrderItems[];
-    totalPrice: number;
+    total_price: number;
     status: string;
-    paymentMethod: string;
-    paymentReferenceNumber: string;
-    paymentDateTime: Date;
-    claimedDateTime: Date;
-    createdDateTime: Date;
+    payment_method: string;
+    payment_reference_number: string;
+    payment_dateTime: Date;
+    claimed_dateTime: Date;
+    created_dateTime: Date;
 }

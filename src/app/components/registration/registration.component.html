@@ -32,10 +32,10 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Role:</mat-label>
-                        <select matNativeControl required>
-                            <option value="1">Admin</option>
-                            <option value="2">Customer</option>
-                            <option value="3">Customer/Colletor</option>
+                        <select matNativeControl required formControlName="role">
+                            <option value="admin">Admin</option>
+                            <option value="customer">Customer</option>
+                            <option value="collector">Customer/Colletor</option>
                         </select>
                     </mat-form-field>
                 </div>
@@ -43,73 +43,69 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Username</mat-label>
-                        <input matInput type="text" placeholder="Enter your username">
+                        <input matInput type="text" placeholder="Enter your username" id="username" name="username" formControlName="username">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Enter your password">
+                        <input matInput type="password" placeholder="Enter your password" formControlName="password">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput type="password" placeholder="Confirm your password">
+                        <input matInput type="password" placeholder="Confirm your password" formControlName="confirm_password">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>First Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your first name">
+                        <input matInput type="text" placeholder="Enter your first name" id="first_name" name="first_name" formControlName="first_name">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Middle Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your middle name">
+                        <input matInput type="text" placeholder="Enter your middle name" formControlName="middle_name">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Last Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your last name">
+                        <input matInput type="text" placeholder="Enter your last name" formControlName="last_name">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Learner's ID</mat-label>
-                        <input matInput type="text" placeholder="Enter your learner's id">
+                        <input matInput type="text" placeholder="Enter your learner's id" formControlName="learner_s_id">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Contact Number</mat-label>
-                        <input matInput type="text" placeholder="Enter your contact number">
+                        <input matInput type="text" placeholder="Enter your contact number" formControlName="contact_number">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Grade Level</mat-label>
-                        <select matNativeControl required>
-                            <option value="1">Grade 1</option>
-                            <option value="2">Grade 2</option>
-                            <option value="3">Grade 3</option>
-                            <option value="4">Grade 4</option>
-                            <option value="5">Grade 5</option>
-                            <option value="6">Grade 6</option>
+                        <select matNativeControl required formControlName="grade_level">
                             <option value="7">Grade 7</option>
                             <option value="8">Grade 8</option>
                             <option value="9">Grade 9</option>
                             <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
                         </select>
                     </mat-form-field>
                 </div>
@@ -117,14 +113,14 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Section</mat-label>
-                        <input matInput type="text" placeholder="Enter your section">
+                        <input matInput type="text" placeholder="Enter your section" formControlName="section">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>School Year</mat-label>
-                        <input matInput type="text" placeholder="Enter your sy">
+                        <input matInput type="text" placeholder="Enter your sy" formControlName="school_year">
                     </mat-form-field>
                 </div>
                 

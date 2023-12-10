@@ -3,6 +3,7 @@ import { Order } from '../../models/order.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
   selector: 'app-order-list',
@@ -16,80 +17,7 @@ export class OrderListComponent {
   isLoggedInUser: boolean = false;
   role: string = '';
 
-  orders: Order[] = [
-    { 
-      id: 1, 
-      customer: { 
-        id: 1, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 30, 
-      status: 'pending',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-    { 
-      id: 2, 
-      customer: { 
-        id: 2, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'paid',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-    { 
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-  ];
+  orders: Order[] = [];
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -103,12 +31,15 @@ export class OrderListComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router, private orderService: OrderService) { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
+      if(this.authService.getRole() == "admin"){
+        router.navigate(['/login']);
+      }
     }
   }
 
@@ -120,4 +51,16 @@ export class OrderListComponent {
       order.id && order.id.toString().includes(this.searchText.toLowerCase())
     );
   }
+
+  ngOnInit(): void {
+    this.getOrders();
+  }
+
+  getOrders() {
+    this.orderService.getOrders().subscribe((orders) => {
+      this.orders = orders;
+      console.log(this.orders);
+    });
+  }
+  
 }

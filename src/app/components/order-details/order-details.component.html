@@ -33,45 +33,45 @@
                 <mat-card-content>
                     <br>
                 <div>
-                    <p><strong>Order ID:</strong> {{ 1 }}</p>
-                    <p><strong>Order Date:</strong> {{ 1 }}</p>
-                    <p><strong>Status:</strong> {{ 1 }}</p>
+                    <p><strong>Order ID:</strong> {{ order?order.id:"" }}</p>
+                    <p><strong>Order Date:</strong> {{ order?order.date_ordered:"" }}</p>
+                    <p><strong>Status:</strong> {{ order?order.status:"" }}</p>
                     <p><strong>Customer Details</strong> </p>
-                    <p><strong>Full Name:</strong> </p>
-                    <p><strong>Learner's ID:</strong> </p>
-                    <p><strong>School Year:</strong> </p>
-                    <p><strong>Grade Level:</strong> </p>
-                    <p><strong>Section:</strong> </p>
+                    <p><strong>Full Name:</strong> {{ order?order.user.first_name + " " + order.user.last_name:"" }}</p>
+                    <p><strong>Learner's ID:</strong> {{ order?order.user.learner_s_id:"" }}</p>
+                    <p><strong>School Year:</strong> {{ order?order.user_school_year:"" }}</p>
+                    <p><strong>Grade Level:</strong> {{ order?order.user.grade_level:"" }}</p>
+                    <p><strong>Section:</strong> {{ order?order.user.section:"" }}</p>
                     <p><strong>Other Order Details</strong> </p>
-                    <p><strong>Payment Method:</strong> </p>
-                    <p><strong>Payment Date:</strong> </p>
-                    <p><strong>Payment Reference No.:</strong> </p>
-                    <p><strong>Claimed Date:</strong> </p>
-                    <p><strong>Total Amount:</strong> </p>
+                    <p><strong>Payment Method:</strong> {{ order?(order.payments.length!=0?order.payments[0].method:""):"" }}</p>
+                    <p><strong>Payment Date:</strong> {{ order?order.date_paid:"" }}</p>
+                    <p><strong>Payment Reference No.:</strong> {{ order?(order.payments.length!=0?order.payments[0].reference_number:""):"" }}</p>
+                    <p><strong>Claimed Date:</strong> {{ order?order.date_claimed:"" }}</p>
+                    <p><strong>Total Amount:</strong> {{ order?order.total_price:"" }}</p>
                 </div>
                 <div>
                     <p><strong>Order Items</strong></p>
                     <div class="mat-elevation-z8" style="">
-                        <mat-table [dataSource]="order.items" class="mat-elevation-z8">
+                        <mat-table [dataSource]="order?order.order_items:[]" class="mat-elevation-z8">
                 
                             <ng-container matColumnDef="name">
                                 <mat-header-cell *matHeaderCellDef>Menu Name</mat-header-cell>
-                                <mat-cell *matCellDef="let order">{{ order.items.name }}</mat-cell>
+                                <mat-cell *matCellDef="let item">{{ item.id }}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="price">
                                 <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-                                <mat-cell *matCellDef="let order">{{ order.items.price }}</mat-cell>
+                                <mat-cell *matCellDef="let item">{{ item.total_price/item.quantity }}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="quantity">
                                 <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
-                                <mat-cell *matCellDef="let order">{{ order.items.quantity }}</mat-cell>
+                                <mat-cell *matCellDef="let item">{{ item.quantity }}</mat-cell>
                             </ng-container>
 
                             <ng-container matColumnDef="totalPrice">
                                 <mat-header-cell *matHeaderCellDef>Sub total</mat-header-cell>
-                                <mat-cell *matCellDef="let order">{{ order.items.totalPrice }}</mat-cell>
+                                <mat-cell *matCellDef="let item">{{ item.total_price }}</mat-cell>
                             </ng-container>
 
                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -82,19 +82,19 @@
                 </div>
                 <br>
                 <div>
-                    <div class="form-group">
+                    <div class="">
                         <mat-form-field appearance="fill">
                             <mat-label>Payment Method</mat-label>
-                            <select matNativeControl required>
-                                <option value="1">GCash - Reference no.</option>
-                                <option value="2">Cash via collector</option>
+                            <select matNativeControl required [(ngModel)] = "payment_method">
+                                <option value="gcash_ref">GCash - Reference no.</option>
+                                <option value="collection">Cash via collector</option>
                             </select>
                         </mat-form-field>
                     </div>
-                    <div class="form-group">
+                    <div class="">
                         <mat-form-field appearance="fill">
                             <mat-label>GCash reference number:</mat-label>
-                            <input matInput type="text" placeholder="Enter your gcash reference no.">
+                            <input matInput type="text" placeholder="Enter your gcash reference no." [(ngModel)] = "payment_reference">
                         </mat-form-field>
                     </div>
                 </div>
@@ -111,8 +111,9 @@
 
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-button color="primary"  (click)="askIfCancel()">Submit</button>
-                    <button mat-button color="warn"  (click)="askIfCancel()">Cancel</button>
+                    <!-- <button mat-button color="primary"  (click)="submitOrder()" *ngIf="order && order.status=='pending'">Submit</button> -->
+                    <button mat-button color="primary"  (click)="submitOrder()" >Submit</button>
+                    <button mat-button color="warn"  (click)="askIfCancel()" *ngIf="order && (order.status!='cancelled' && order.status!='completed')">Cancel</button>
                     <button mat-button color="basic" routerLink="/order-list" >Back to Orders</button>
                 </mat-card-actions>
             </mat-card>

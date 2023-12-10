@@ -36,76 +36,83 @@
                     <h1>Account Details Form</h1>
                 </div>
 
+                <div class="form-group" *ngIf="role=='admin'">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Role:</mat-label>
+                        <select matNativeControl required formControlName="role" >
+                            <option value="admin">Admin</option>
+                            <option value="customer">Customer</option>
+                            <option value="collector">Customer/Colletor</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Username</mat-label>
-                        <input matInput type="text" placeholder="Enter your username">
+                        <input matInput type="text" placeholder="Enter your username" value="{{account.username}}" formControlName="username">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Enter your password">
+                        <input matInput type="password" placeholder="Enter your password" formControlName="password">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Confirm Password</mat-label>
-                        <input matInput type="password" placeholder="Confirm your password">
+                        <input matInput type="password" placeholder="Confirm your password" formControlName="confirm_password">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>First Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your first name">
+                        <input matInput type="text" placeholder="Enter your first name" value="{{account.first_name}}" formControlName="first_name" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Middle Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your middle name">
+                        <input matInput type="text" placeholder="Enter your middle name" value="{{account.middle_name}}" formControlName="middle_name" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Last Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your last name">
+                        <input matInput type="text" placeholder="Enter your last name" value="{{account.last_name}}" formControlName="last_name" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Learner's ID</mat-label>
-                        <input matInput type="text" placeholder="Enter your learner's id">
+                        <input matInput type="text" placeholder="Enter your learner's id" value="{{account.laerner_s_id}}" formControlName="learner_s_id" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Contact Number</mat-label>
-                        <input matInput type="text" placeholder="Enter your contact number">
+                        <input matInput type="text" placeholder="Enter your contact number" value="{{account.contact_number}}" formControlName="contact_number" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Grade Level</mat-label>
-                        <select matNativeControl required>
-                            <option value="1">Grade 1</option>
-                            <option value="2">Grade 2</option>
-                            <option value="3">Grade 3</option>
-                            <option value="4">Grade 4</option>
-                            <option value="5">Grade 5</option>
-                            <option value="6">Grade 6</option>
+                        <select matNativeControl required  value="{{account.grade_level}}" formControlName="grade_level" [readonly]="role!='admin'">
                             <option value="7">Grade 7</option>
                             <option value="8">Grade 8</option>
                             <option value="9">Grade 9</option>
                             <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
                         </select>
                     </mat-form-field>
                 </div>
@@ -113,7 +120,14 @@
                 <div class="form-group">
                     <mat-form-field appearance="fill">
                         <mat-label>Section</mat-label>
-                        <input matInput type="text" placeholder="Enter your section">
+                        <input matInput type="text" placeholder="Enter your section" value="{{account.section}}" formControlName="section" [readonly]="role!='admin'">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>School Year</mat-label>
+                        <input matInput type="text" placeholder="Enter your sy" formControlName="school_year" [readonly]="role!='admin'">
                     </mat-form-field>
                 </div>
 

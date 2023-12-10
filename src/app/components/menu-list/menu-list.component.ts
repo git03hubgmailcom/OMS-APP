@@ -3,7 +3,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Menu } from '../../models/menu.model';
-
+import Swal from 'sweetalert2';
+import { MenuService } from '../../services/menu/menu.service';
 
 @Component({
   selector: 'app-menu-list',
@@ -17,7 +18,7 @@ export class MenuListComponent {
   isLoggedInUser: boolean = false;
   role: string = '';
 
-  adminMenus : Menu[] = [{
+  adminMenus : Menu[] = [/* {
       id: 2,
       name: 'Maha',
       description: 'Maha',
@@ -184,7 +185,7 @@ export class MenuListComponent {
       description: '',
       price: 40,
       stock: 30
-    }
+    } */
   ];
 
   toggleSidenav() {
@@ -199,13 +200,18 @@ export class MenuListComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private authService: AuthService, private router: Router ) { 
+  constructor(private authService: AuthService, private router: Router, private menuService: MenuService)  { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
+      if(this.authService.getRole() == "admin"){
+        router.navigate(['/login']);
+      }
     }
+
+    this.fetchMenus();
   }
 
   displayedColumns: string[] = ['id', 'name', 'price', 'stock', 'actions'];
@@ -216,5 +222,12 @@ export class MenuListComponent {
     return this.adminMenus.filter(menu =>
       menu.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+  fetchMenus() {
+    this.menuService.getMenus().subscribe((menus: Menu[]) => {
+      this.adminMenus = menus;
+      console.log("Data from API: ", this.adminMenus);
+    });
   }
 }

@@ -35,6 +35,10 @@ import { MyCollectionsComponent } from './components/my-collections/my-collectio
 import { MyCollectOrdersComponent } from './components/my-collect-orders/my-collect-orders.component';
 import { MyCollectOrderDetailsComponent } from './components/my-collect-order-details/my-collect-order-details.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
+import { CommonModule } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +60,7 @@ import { MyCollectOrderDetailsComponent } from './components/my-collect-order-de
     OrderDetailsComponent,
     MyCollectionsComponent,
     MyCollectOrdersComponent,
-    MyCollectOrderDetailsComponent
+    MyCollectOrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,9 @@ import { MyCollectOrderDetailsComponent } from './components/my-collect-order-de
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    CommonModule
   ],
   providers: [
     {

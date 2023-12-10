@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MenuService } from '../../services/menu/menu.service';
 
 @Component({
   selector: 'app-admin-menu-list',
@@ -19,7 +20,7 @@ export class AdminMenuListComponent {
   isLoggedInUser: boolean = false;
   role: string = '';
 
-  adminMenus : Menu[] = [
+  adminMenus : Menu[] = [/* 
     {
       id: 2,
       name: 'Maha',
@@ -187,7 +188,7 @@ export class AdminMenuListComponent {
       description: '',
       price: 40,
       stock: 30
-    }
+    } */
   ];
 
   toggleSidenav() {
@@ -202,10 +203,12 @@ export class AdminMenuListComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private authService: AuthService, private router: Router ) { 
+  constructor(private authService: AuthService, private router: Router, private menuService: MenuService ) { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }
+
+    this.fetchMenus();
   }
 
   displayedColumns: string[] = ['id', 'name', 'price', 'stock', 'actions'];
@@ -216,6 +219,13 @@ export class AdminMenuListComponent {
     return this.adminMenus.filter(menu =>
       menu.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+  fetchMenus() {
+    this.menuService.getMenus().subscribe((menus: Menu[]) => {
+      this.adminMenus = menus;
+      console.log("Data from API: ", this.adminMenus);
+    });
   }
 
   askIfDelete(menu: Menu) {
@@ -229,11 +239,15 @@ export class AdminMenuListComponent {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Menu item has been deleted.",
-          icon: "success"
+        this.menuService.deleteMenu(menu.id).subscribe(() => {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Menu item has been deleted.",
+            icon: "success"
+          });
+          this.fetchMenus();
         });
+
       }
     });
   }

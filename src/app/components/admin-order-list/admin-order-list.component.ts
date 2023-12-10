@@ -3,12 +3,15 @@ import { Order } from '../../models/order.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import Swal from 'sweetalert2';
+import { OrderService } from '../../services/order/order.service';
 
 @Component({
   selector: 'app-admin-order-list',
   templateUrl: './admin-order-list.component.html',
   styleUrls: ['./admin-order-list.component.css']
 })
+
 export class AdminOrderListComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -16,80 +19,20 @@ export class AdminOrderListComponent {
   isLoggedInUser: boolean = false;
   role: string = '';
 
-  orders: Order[] = [
-    { 
-      id: 1, 
-      customer: { 
-        id: 1, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 30, 
-      status: 'pending',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-    { 
-      id: 2, 
-      customer: { 
-        id: 2, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'paid',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-    { 
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    },
-  ];
+  orders: Order[] = [];
+
+  ngOnInit(): void {
+    this.isLoggedInUser = this.authService.isLoggedInUser();
+    this.role = this.authService.getRole();
+    this.getOrders();
+  }
+  
+  getOrders() {
+    this.orderService.getOrders().subscribe((orders) => {
+      this.orders = orders;
+      console.log(this.orders);
+    });
+  }
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -103,7 +46,7 @@ export class AdminOrderListComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router, private orderService: OrderService) { 
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }

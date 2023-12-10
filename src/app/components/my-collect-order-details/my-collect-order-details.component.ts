@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { CollectionService } from 'src/app/services/collection/collection.service';
+import { CollectionItem } from 'src/app/models/collection-item.model';
 
 @Component({
   selector: 'app-my-collect-order-details',
@@ -19,6 +21,17 @@ export class MyCollectOrderDetailsComponent {
   role: string = '';
 
   order: Order | undefined | any;
+  collectionItem: CollectionItem | any;
+
+  collection_id: number = 0;
+
+  getCollectionItem(collection_item_id: number) {
+    this.collectionService.getCollectionItem(collection_item_id).subscribe((collectionItem) => {
+      this.collectionItem = collectionItem;
+      this.collection_id = collectionItem.collection_id;
+      console.log(this.collectionItem);
+    });
+  }
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -32,54 +45,35 @@ export class MyCollectOrderDetailsComponent {
     this.isLoggedInUser = false;
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private collectionService: CollectionService) {
     if (!authService.isLoggedInUser()) {
       router.navigate(['/login']);
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
+      if(this.authService.getRole() == "admin"){
+        router.navigate(['/login']);
+      }
     }
   }
 
   ngOnInit(): void {
 
     this.route.params.subscribe(params => {
-      const id = +params['id']; 
-
+      const collection_item_id = +params['collection_item_id']; 
+      this.getCollectionItem(collection_item_id);
     });
+    
+    
 
-    this.order = {
-      id: 3, 
-      customer: { 
-        id: 3, 
-        username: '', 
-        firstName: '', 
-        middleName: '', 
-        lastName: '', 
-        learnersId: '', 
-        contactNumber: '', 
-        gradeLevel: '', 
-        section: '', 
-        school_year: '', 
-        role: '' 
-      }, 
-      items: [],
-      totalPrice: 50, 
-      status: 'completed',
-      paymentMethod: '',
-      paymentReferenceNumber: '',
-      paymentDateTime: new Date(),
-      claimedDateTime: new Date(),
-      createdDateTime: new Date()
-    };
   }
 
   displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];
 
-  askIfMarkPaid() {
+  askIfMarkPaid(collectionItem: CollectionItem) {
     Swal.fire({
       title: "Are you sure you want to mark this order as paid?",
-      text: "Order: " + this.order.id + " will be mark as paid.",
+      text: "Order: " + this.collectionItem.order.id + " will be mark as paid.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -87,41 +81,44 @@ export class MyCollectOrderDetailsComponent {
       confirmButtonText: "Yes, mark it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Marked as paid!",
-          text: "Order has been marked as paid.",
-          icon: "success"
+        collectionItem.status = "paid";
+        this.collectionService.updateCollectionItem(collectionItem.id, collectionItem).subscribe((collectionItem) => {
+          this.getCollectionItem(collectionItem.id);
+          console.log(this.collectionItem);
+          Swal.fire({
+            title: "Marked as paid!",
+            text: "Order has been marked as paid.",
+            icon: "success"
+          });
         });
+        
       }
     });
   }
 
-  submitOrder() {
+  askIfRemoveToCollection(collectionItem: CollectionItem) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You are about to submit your order.',
-      icon: 'warning',
+      title: "Are you sure you want to remove this order?",
+      text: "Order: " + this.collectionItem.order.id + " will be remove to collection.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, submit my order!',
-      cancelButtonText: 'No'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Order Submitted!',
-          'Your order has been submitted.',
-          'success'
-        ).then((result) => {
-
+        this.collectionService.deleteCollectionItem(collectionItem.id).subscribe((collectionItem) => {
+          this.router.navigate([`/my-collect-orders/${this.collection_id}`]);
+          console.log(this.collectionItem);
+          Swal.fire({
+            title: "Removed!",
+            text: "Order has been removed to collection.",
+            icon: "success"
+          });
         });
-      }/*  else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Order Cancelled',
-          'Your order has not been submitted.',
-          'error'
-        ).then((result) => {
-          this.router.navigate(['/cart']);
-        });
-      } */
+        
+      }
     });
   }
+
 }
