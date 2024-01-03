@@ -8,7 +8,8 @@ import { CollectionItem } from './../../models/collection-item.model';
   providedIn: 'root'
 })
 export class CollectionService {
-  private apiUrl = 'http://172.24.155.65:8000/api/collections';
+  //private apiUrl = 'http://172.24.155.65:8000/api/collections';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/collections';
 
   constructor(private http: HttpClient) {}
 

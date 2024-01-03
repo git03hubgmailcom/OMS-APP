@@ -8,7 +8,8 @@ import { CartItem } from 'src/app/models/cart-item.model';
   providedIn: 'root'
 })
 export class CartItemsService {
-  private apiUrl = 'http://172.24.155.65:8000/api/cart-items';
+  //private apiUrl = 'http://172.24.155.65:8000/api/cart-items';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/cart-items';
 
   constructor(private http: HttpClient) {}
 

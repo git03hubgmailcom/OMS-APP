@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Account } from './../../models/account.model';
 
@@ -8,12 +8,27 @@ import { Account } from './../../models/account.model';
 })
 export class AuthService {
   private isLoggedIn = false;
-  private apiUrl = 'http://172.24.155.65:8000/api/users';
+  //private apiUrl = 'http://172.24.155.65:8000/api/users';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/users';
 
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    const user = this.http.post<any>(`${this.apiUrl}/login`, { username, password });
+    // Set the headers to include the desired CORS information
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*', // Replace with your Angular app's URL
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type'
+      
+    });
+
+    // Include the headers in the request options
+    const requestOptions = {
+      headers: headers,
+    };
+
+    const user = this.http.post<any>(`${this.apiUrl}/login`, { username, password }, { headers: headers });
     user.subscribe(
       res => {
         if(res.success == true){

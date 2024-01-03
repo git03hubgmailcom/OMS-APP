@@ -7,7 +7,8 @@ import { Account } from './../../models/account.model';
   providedIn: 'root'
 })
 export class AccountService {
-  private apiUrl = 'http://172.24.155.65:8000/api/users';
+  //private apiUrl = 'http://172.24.155.65:8000/api/users';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/users';
 
   constructor(private http: HttpClient) {}
 

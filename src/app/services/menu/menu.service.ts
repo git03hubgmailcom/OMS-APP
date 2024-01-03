@@ -7,7 +7,8 @@ import { Menu } from 'src/app/models/menu.model';
   providedIn: 'root'
 })
 export class MenuService {
-  private apiUrl = 'http://172.24.155.65:8000/api/menus';
+  //private apiUrl = 'http://172.24.155.65:8000/api/menus';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/menus';
 
   constructor(private http: HttpClient) {}
 

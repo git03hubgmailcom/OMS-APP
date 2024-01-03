@@ -8,7 +8,8 @@ import { Order } from './../../models/order.model';
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://172.24.155.65:8000/api/orders';
+  //private apiUrl = 'http://172.24.155.65:8000/api/orders';
+  private apiUrl = 'http://oms-slhs.free.nf/public/api/orders';
 
   constructor(private http: HttpClient) {}
 
