@@ -20,7 +20,7 @@ export class AuthService {
     // Set headers to handle CORS
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://oms-slhs.free.nf/',
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
       // Add other headers if needed
@@ -31,7 +31,7 @@ export class AuthService {
       password: password,
     };
 
-    const user = this.http.get<any>(`${this.apiUrl}`);
+    const user = this.http.post<any>(`${this.apiUrl}/login`, credentials);
     
     user.subscribe(
       res => {

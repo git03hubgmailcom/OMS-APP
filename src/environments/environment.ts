@@ -1,5 +1,5 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://oms-slhs.free.nf/public/api',
-};
+    production: false,
+    apiUrl: 'http://localhost:8000/api',
+  };
   
