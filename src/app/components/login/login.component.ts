@@ -38,7 +38,7 @@ export class LoginComponent {
             icon: 'error',
             title: 'Oops...',
             text: 'Invalid username or password!',
-          })
+          });
         }
 
       },

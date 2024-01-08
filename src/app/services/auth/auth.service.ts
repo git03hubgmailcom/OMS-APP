@@ -31,7 +31,7 @@ export class AuthService {
       password: password,
     };
 
-    const user = this.http.post<any>(`${this.apiUrl}/login`, credentials, { headers: headers });
+    const user = this.http.get<any>(`${this.apiUrl}`);
     
     user.subscribe(
       res => {
