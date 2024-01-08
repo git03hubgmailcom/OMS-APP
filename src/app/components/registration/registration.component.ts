@@ -35,7 +35,7 @@ export class RegistrationComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private accountService: AccountService) {
     if (!authService.isLoggedInUser()) {
-      router.navigate(['/login']);
+      //router.navigate(['/login']);
     }
 
     this.registrationForm = this.fb.group({

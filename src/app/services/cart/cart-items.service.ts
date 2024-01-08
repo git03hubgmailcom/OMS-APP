@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Menu } from 'src/app/models/menu.model';
 import { CartItem } from 'src/app/models/cart-item.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartItemsService {
-  //private apiUrl = 'http://172.24.155.65:8000/api/cart-items';
-  private apiUrl = 'http://oms-slhs.free.nf/public/api/cart-items';
+  private apiUrl = environment.apiUrl + '/users';
 
   constructor(private http: HttpClient) {}
 

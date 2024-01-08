@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,6 @@ export class LoginComponent {
       res => {
         console.log(res);
         if(res.success == true){
-          
           if(this.authService.getRole() == "admin"){
             this.router.navigate(['/admin-menu-list']);
           }else{
@@ -34,6 +34,11 @@ export class LoginComponent {
           }
         }else{
           console.log("login failed");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid username or password!',
+          })
         }
 
       },

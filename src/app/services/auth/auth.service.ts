@@ -1,25 +1,65 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Account } from './../../models/account.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private isLoggedIn = false;
-  //private apiUrl = 'http://172.24.155.65:8000/api/users';
-  private apiUrl = 'http://oms-slhs.free.nf/public/api/users';
+  private apiUrl = environment.apiUrl + '/users';
 
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
+    const url = `${this.apiUrl}`;
+
+    // Set headers to handle CORS
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      // Add other headers if needed
+    });
+
+    const credentials = {
+      username: username,
+      password: password,
+    };
+
+    const user = this.http.post<any>(`${this.apiUrl}/login`, credentials, { headers: headers });
+    
+    user.subscribe(
+      res => {
+        console.log(res);
+        if(res.success == true){
+          localStorage.setItem('token', "");
+          localStorage.setItem('role', res.data.role);
+          localStorage.setItem('userId', res.data.id);
+          this.isLoggedIn = true;
+        }
+
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    return user;
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError('Something went wrong. Please try again later.');
+  }
+
+  /* login(username: string, password: string): Observable<any> {
     // Set the headers to include the desired CORS information
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*', // Replace with your Angular app's URL
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      'Access-Control-Allow-Headers': 'Content-Type'
       
     });
 
@@ -28,7 +68,15 @@ export class AuthService {
       headers: headers,
     };
 
-    const user = this.http.post<any>(`${this.apiUrl}/login`, { username, password }, { headers: headers });
+    const user = this.http.get<any>(`${this.apiUrl}`, requestOptions);
+    user.subscribe(
+      (response) => {
+        // Handle success
+      },
+      (error) => {
+        // Handle error
+      }
+    );
     user.subscribe(
       res => {
         if(res.success == true){
@@ -44,7 +92,7 @@ export class AuthService {
       }
     );
     return user;
-  }
+  } */
 
   /* login(username: string, password: string): boolean {
    

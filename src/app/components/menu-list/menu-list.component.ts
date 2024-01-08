@@ -227,7 +227,7 @@ export class MenuListComponent {
   fetchMenus() {
     this.menuService.getMenus().subscribe((menus: Menu[]) => {
       this.adminMenus = menus;
-      console.log("Data from API: ", this.adminMenus);
+      console.log("Data from API2: ", this.adminMenus);
     });
   }
 }

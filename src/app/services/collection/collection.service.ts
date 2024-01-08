@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Collection } from './../../models/collections.model';
 import { CollectionItem } from './../../models/collection-item.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionService {
-  //private apiUrl = 'http://172.24.155.65:8000/api/collections';
-  private apiUrl = 'http://oms-slhs.free.nf/public/api/collections';
-
+  private apiUrl = environment.apiUrl + '/collections';
+  
   constructor(private http: HttpClient) {}
 
   deleteCollectionItem(collection_item_id: number): Observable<any> {

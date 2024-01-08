@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Account } from './../../models/account.model';
 import { Order } from './../../models/order.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  //private apiUrl = 'http://172.24.155.65:8000/api/orders';
-  private apiUrl = 'http://oms-slhs.free.nf/public/api/orders';
+  private apiUrl = environment.apiUrl + '/orders';
 
   constructor(private http: HttpClient) {}
 
