@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OrderService } from 'src/app/services/order/order.service';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @Component({
   selector: 'app-order-details',
@@ -23,6 +24,33 @@ export class OrderDetailsComponent {
 
   payment_reference: string = '';
   payment_method: string = '';
+
+  qrData: string = '';
+
+  scannedCode: string = '';
+
+  handleFileInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const file = inputElement.files?.[0];
+
+    if (file) {
+      this.readQrCodeFromFile(file);
+    }
+  }
+
+  readQrCodeFromFile(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      console.log('Uploaded QR code:', result);
+      // Implement your logic with the uploaded QR code result
+    };
+    reader.readAsText(file);
+  }
+
+  onCodeScanned(result: any) {
+    this.scannedCode = result.code;
+  }
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -62,13 +90,21 @@ export class OrderDetailsComponent {
   getOrder(id: number) {
     this.orderService.getOrder(id).subscribe((order) => {
       this.order = order;
+      console.log("order");
       console.log(this.order);
+      this.qrData = this.formatNumberWithZeroPrefix(this.order.id, 4);
+
+      this.payment_method = this.order.payment_method;
       if(this.order.payments.length > 0){
         this.payment_reference = this.order.payments[0].reference_number;
         this.payment_method = this.order.payments[0].method;
-        console.log(this.payment_reference);
+        console.log(this.payment_method);
       }
     });
+  }
+
+  formatNumberWithZeroPrefix(number: number, length: number): string {
+    return String(number).padStart(length, '0');
   }
 
   displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];

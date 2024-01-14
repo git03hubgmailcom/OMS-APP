@@ -43,7 +43,7 @@
                     <p><strong>Grade Level:</strong> {{ order?order.user.grade_level:"" }}</p>
                     <p><strong>Section:</strong> {{ order?order.user.section:"" }}</p>
                     <p><strong>Other Order Details</strong> </p>
-                    <p><strong>Payment Method:</strong> {{ order?(order.payments.length!=0?order.payments[0].method:""):"" }}</p>
+                    <p><strong>Payment Method:</strong> {{ order?(order.payments.length!=0?order.payments[0].method:order.payment_method):""}}</p>
                     <p><strong>Payment Date:</strong> {{ order?order.date_paid:"" }}</p>
                     <p><strong>Payment Reference No.:</strong> {{ order?(order.payments.length!=0?order.payments[0].reference_number:""):"" }}</p>
                     <p><strong>Claimed Date:</strong> {{ order?order.date_claimed:"" }}</p>
@@ -91,25 +91,33 @@
                             </select>
                         </mat-form-field>
                     </div>
-                    <div class="">
+                    <div class=""  *ngIf="payment_method === 'gcash_ref'">
                         <mat-form-field appearance="fill">
                             <mat-label>GCash reference number:</mat-label>
                             <input matInput type="text" placeholder="Enter your gcash reference no." [(ngModel)] = "payment_reference">
                         </mat-form-field>
                     </div>
                 </div>
-                <mat-card>
+                <mat-card  *ngIf="payment_method === 'collection'">
                     <mat-card-header>
                       <div mat-card-avatar class="example-header-image"></div>
                       <mat-card-title>My Order's QR</mat-card-title>
                       <mat-card-subtitle>To be scanned by the collector.</mat-card-subtitle>
+                      <qrcode [qrdata]="qrData" ></qrcode>
+                      <!-- <input type="file" (change)="handleFileInput($event)" /> -->
                     </mat-card-header>
-                    <img mat-card-image src="https://via.placeholder.com/350x150" alt="Placeholder image" style="max-width: 20rem; max-height: 20rem;">
                     <mat-card-content>
+                        
+                        <!-- <zxing-scanner
+                            
+                            (codeEmitter)="onCodeScanned($event)"
+                            ></zxing-scanner>
+                            <p>Scanned QR Code: {{ scannedCode }}</p> -->
                     </mat-card-content>
                   </mat-card>
 
                 </mat-card-content>
+
                 <mat-card-actions>
                     <!-- <button mat-button color="primary"  (click)="submitOrder()" *ngIf="order && order.status=='pending'">Submit</button> -->
                     <button mat-button color="primary"  (click)="submitOrder()" >Submit</button>

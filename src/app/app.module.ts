@@ -39,6 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
 
+import { QRCodeModule } from 'angularx-qrcode';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +77,9 @@ import { CommonModule } from '@angular/common';
     FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    QRCodeModule,
+    ZXingScannerModule
   ],
   providers: [
     {

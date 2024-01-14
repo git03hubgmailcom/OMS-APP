@@ -77,14 +77,14 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Payment Method</mat-label>
                             <select matNativeControl required [(ngModel)] = "payment_method">
-                                <option value="gcash_ref">GCash - Reference no.</option>
+                                <option value="gcash_ref" selected>GCash - Reference no.</option>
                                 <option value="collection">Cash via collector</option>
                             </select>
                         </mat-form-field>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="payment_method === 'gcash_ref'">
                         <mat-form-field appearance="fill">
-                            <mat-label>GCash reference number:</mat-label>
+                            <mat-label>GCash reference number</mat-label>
                             <input matInput type="text" placeholder="Enter your gcash reference no." [(ngModel)] = "payment_reference">
                         </mat-form-field>
                     </div>

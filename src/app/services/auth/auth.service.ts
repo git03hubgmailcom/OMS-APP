@@ -37,7 +37,7 @@ export class AuthService {
       res => {
         console.log(res);
         if(res.success == true){
-          localStorage.setItem('token', "");
+          localStorage.setItem('token', res.data.id);
           localStorage.setItem('role', res.data.role);
           localStorage.setItem('userId', res.data.id);
           this.isLoggedIn = true;

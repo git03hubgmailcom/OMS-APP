@@ -27,11 +27,12 @@ export class CheckoutComponent {
   account : Account | undefined | any;
 
   payment_reference : string = "";
-  payment_method : string = "";
+  payment_method : string = "gcash_ref";
 
   getCartItems(){
     this.cartItemsService.getCartItems().subscribe((cartItems) => {
       this.cartItems = cartItems;
+      console.log("cartttt");
       console.log(this.cartItems);
       console.log(this.getTotal(this.cartItems, 'total_price'));
       if(this.cartItems.length == 0){
@@ -109,14 +110,14 @@ export class CheckoutComponent {
         };
 
         this.orderService.createOrder(this.order).subscribe((order) => {
-          this.order = order;
+          this.order = order.data;
           console.log(this.order);
           Swal.fire(
             'Order Submitted!',
             'Your order has been submitted.',
             'success'
           ).then((result) => {
-            this.router.navigate(['/order-details/3']);
+            this.router.navigate(['/order-details/' + this.order['id']]);
           });
         }
         );

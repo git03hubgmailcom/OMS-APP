@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuService } from '../../services/menu/menu.service';
 import { CartItemsService } from 'src/app/services/cart/cart-items.service';
 import { CartItem } from 'src/app/models/cart-item.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-menu-details',
@@ -97,7 +98,15 @@ export class MenuDetailsComponent {
     this.cartItemsService.createCartItem(cartItem).subscribe(
       (response) => {
         console.log(response);
-        window.location.reload();
+        //window.location.reload();
+        Swal.fire({
+          title: 'Success!',
+          text: 'Menu has been added to cart.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        }).then(() => {
+          this.router.navigate(['/menu-list']);
+        });
       },
       (error) => {
         console.log(error);
