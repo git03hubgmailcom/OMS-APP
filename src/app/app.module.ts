@@ -40,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { QRCodeModule } from 'angularx-qrcode';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+//import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 
 
@@ -79,7 +79,7 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     HttpClientModule,
     CommonModule,
     QRCodeModule,
-    ZXingScannerModule
+    //ZXingScannerModule
   ],
   providers: [
     {

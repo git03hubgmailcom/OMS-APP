@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { OrderService } from 'src/app/services/order/order.service';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+//import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @Component({
   selector: 'app-order-details',
@@ -29,7 +29,7 @@ export class OrderDetailsComponent {
 
   scannedCode: string = '';
 
-  handleFileInput(event: Event): void {
+  /* handleFileInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const file = inputElement.files?.[0];
 
@@ -50,7 +50,7 @@ export class OrderDetailsComponent {
 
   onCodeScanned(result: any) {
     this.scannedCode = result.code;
-  }
+  } */
 
   toggleSidenav() {
     if (this.sidenav) {
@@ -149,6 +149,7 @@ export class OrderDetailsComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.order.status = this.payment_method=="gcash_ref"?"paid":"pending";
+        this.order.payment_method = this.payment_method;
         this.orderService.updateOrder(this.order.id, this.order).subscribe((order) => {
           this.getOrder(this.order.id);
           console.log(this.order);
