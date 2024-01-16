@@ -10,11 +10,11 @@ import { CollectionItem } from 'src/app/models/collection-item.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-my-collect-orders',
-  templateUrl: './my-collect-orders.component.html',
-  styleUrl: './my-collect-orders.component.css'
+  selector: 'app-admin-collection-orders',
+  templateUrl: './admin-collection-orders.component.html',
+  styleUrl: './admin-collection-orders.component.css'
 })
-export class MyCollectOrdersComponent implements OnInit {
+export class AdminCollectionOrdersComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isSidenavOpen: boolean = false;
@@ -26,22 +26,23 @@ export class MyCollectOrdersComponent implements OnInit {
   collectionItems: CollectionItem[] = [];
   add_order_id: string = '';
 
-  askIfDelete(collection: Collection, order: Order) {
+  askIfReceive(collection: Collection) {
     Swal.fire({
-      title: "Are you sure you want to remove this order on this collection?",
-      text: "Order: " + order.id + " will be removed on this collection.",
+      title: "Are you sure you want to receive this collection?",
+      text: "Collection: " + this.collection.id + " will be received.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, remove it!"
+      confirmButtonText: "Yes, receive it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        if(order.id){
-          this.collectionService.removeOrder(order.id, this.collection.id).subscribe((collection) => {
+        if(collection.id){
+          collection.status = "paid";
+          this.collectionService.updateCollection(this.collection.id, this.collection).subscribe((collection) => {
             Swal.fire({
-              title: "Deleted!",
-              text: "Order has been removed to the collection.",
+              title: "Received!",
+              text: "Collection has been received.",
               icon: "success"
             });
             this.getCollection(this.collection.id);
@@ -101,7 +102,7 @@ export class MyCollectOrdersComponent implements OnInit {
     }else{
       this.isLoggedInUser = true;
       this.role = authService.getRole();
-      if(this.authService.getRole() == "admin"){
+      if(this.authService.getRole() != "admin"){
         router.navigate(['/login']);
       }
     }

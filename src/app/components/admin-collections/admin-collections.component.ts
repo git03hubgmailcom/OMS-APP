@@ -8,11 +8,11 @@ import { CollectionService } from '../../services/collection/collection.service'
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-my-collections',
-  templateUrl: './my-collections.component.html',
-  styleUrl: './my-collections.component.css'
+  selector: 'app-admin-collections',
+  templateUrl: './admin-collections.component.html',
+  styleUrl: './admin-collections.component.css'
 })
-export class MyCollectionsComponent implements OnInit {
+export class AdminCollectionsComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isSidenavOpen: boolean = false;
@@ -27,7 +27,7 @@ export class MyCollectionsComponent implements OnInit {
   }
 
   getCollections() {
-    this.collectionService.getCollectionsOfLoggedUser(+this.user_id).subscribe((collections) => {
+    this.collectionService.getCollections().subscribe((collections) => {
       this.collections = collections;
       console.log(this.collections);
     });
@@ -77,7 +77,7 @@ export class MyCollectionsComponent implements OnInit {
       this.isLoggedInUser = true;
       this.role = authService.getRole();
       this.user_id = authService.getUserId();
-      if(this.authService.getRole() == "admin"){
+      if(this.authService.getRole() == "user"){
         router.navigate(['/login']);
       }
     }

@@ -19,8 +19,8 @@ export class CartItemsService {
   }
 
   // READ
-  getCartItems(): Observable<CartItem[]> {
-    return this.http.get<CartItem[]>(this.apiUrl);
+  getCartItems(userId:any): Observable<CartItem[]> {
+    return this.http.get<CartItem[]>(`${this.apiUrl}/user/${userId}`);
   }
 
   getCartItem(id: number): Observable<CartItem> {

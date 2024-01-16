@@ -23,6 +23,11 @@ export class OrderService {
     return this.http.get<Order[]>(this.apiUrl);
   }
 
+  // READ
+  getOrdersOfLoggedUser(userId: string): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/user/${userId}`);
+  }
+
   getOrder(id: number): Observable<Order> {
     return this.http.get<Order>(`${this.apiUrl}/${id}`);
   }

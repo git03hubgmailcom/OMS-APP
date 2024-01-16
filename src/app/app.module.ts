@@ -42,6 +42,9 @@ import { CommonModule } from '@angular/common';
 import { QRCodeModule } from 'angularx-qrcode';
 //import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
+import { AdminCollectionsComponent } from './components/admin-collections/admin-collections.component';
+import { AdminCollectionOrdersComponent } from './components/admin-collection-orders/admin-collection-orders.component';
+import { AdminCollectionOrderDetailsComponent } from './components/admin-collection-order-details/admin-collection-order-details.component';
 
 
 @NgModule({
@@ -66,6 +69,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     MyCollectionsComponent,
     MyCollectOrdersComponent,
     MyCollectOrderDetailsComponent,
+    AdminCollectionsComponent,
+    AdminCollectionOrdersComponent,
+    AdminCollectionOrderDetailsComponent
   ],
   imports: [
     BrowserModule,

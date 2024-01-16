@@ -18,6 +18,9 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { MyCollectionsComponent } from './components/my-collections/my-collections.component';
 import { MyCollectOrdersComponent } from './components/my-collect-orders/my-collect-orders.component';
 import { MyCollectOrderDetailsComponent } from './components/my-collect-order-details/my-collect-order-details.component';
+import { AdminCollectionsComponent } from './components/admin-collections/admin-collections.component';
+import { AdminCollectionOrdersComponent } from './components/admin-collection-orders/admin-collection-orders.component';
+import { AdminCollectionOrderDetailsComponent } from './components/admin-collection-order-details/admin-collection-order-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -42,6 +45,10 @@ const routes: Routes = [
   { path: 'my-collect-orders/:id', component: MyCollectOrdersComponent },
   { path: 'my-collect-orders/new', component: MyCollectOrdersComponent },
   { path: 'my-collect-order-details/:collection_item_id', component: MyCollectOrderDetailsComponent },
+  { path: 'admin-collections', component: AdminCollectionsComponent },
+  { path: 'admin-collect-orders/:id', component: AdminCollectionOrdersComponent },
+  { path: 'admin-collect-order-details/:collection_item_id', component: AdminCollectionOrderDetailsComponent }
+
 ];
 
 @NgModule({

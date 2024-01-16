@@ -2,12 +2,10 @@
     <mat-sidenav #sidenav>
         <!-- Add your sidenav content here -->
         <mat-nav-list>
-            <a mat-list-item routerLink="/my-account" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">My Account</a>
-            <a mat-list-item  routerLink="/menu-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Menu</a>
-            <a mat-list-item routerLink="/order-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Orders</a>
-            <a mat-list-item routerLink="/cart" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Cart</a>
-
-            <a mat-list-item routerLink="/my-collections" *ngIf="role=='collector'" (click)="toggleSidenav()">Collections</a>
+            <a mat-list-item routerLink="/accounts" (click)="toggleSidenav()">Accounts</a>
+            <a mat-list-item  routerLink="/admin-menu-list" (click)="toggleSidenav()">Menu</a>
+            <a mat-list-item routerLink="/admin-order-list" (click)="toggleSidenav()">Orders</a>
+            <a mat-list-item routerLink="/admin-collections" (click)="toggleSidenav()">Collections</a>
 
 
             <a mat-list-item routerLink="/login" (click)="logout()">Logout</a>
@@ -105,8 +103,8 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <!-- <button mat-button color="primary" (click)="askIfMarkPaid(collectionItem)">Mark as paid</button> -->
-                    <button mat-button color="primary" (click)="askIfRemoveToCollection(collectionItem)">Remove to collection</button>
-                    <button mat-button color="basic" routerLink="/my-collect-orders/{{collection_id}}" >Back to Orders</button>
+                    <!-- <button mat-button color="primary" (click)="askIfRemoveToCollection(collectionItem)">Remove to collection</button> -->
+                    <button mat-button color="basic" routerLink="/admin-collect-orders/{{collection_id}}" >Back to Orders</button>
                 </mat-card-actions>
             </mat-card>
         </div>

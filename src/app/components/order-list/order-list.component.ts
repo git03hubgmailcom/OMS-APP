@@ -57,7 +57,7 @@ export class OrderListComponent {
   }
 
   getOrders() {
-    this.orderService.getOrders().subscribe((orders) => {
+    this.orderService.getOrdersOfLoggedUser(this.authService.getUserId()).subscribe((orders) => {
       this.orders = orders;
       console.log(this.orders);
     });

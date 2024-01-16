@@ -30,7 +30,7 @@ export class CheckoutComponent {
   payment_method : string = "gcash_ref";
 
   getCartItems(){
-    this.cartItemsService.getCartItems().subscribe((cartItems) => {
+    this.cartItemsService.getCartItems(this.authService.getUserId()).subscribe((cartItems) => {
       this.cartItems = cartItems;
       console.log("cartttt");
       console.log(this.cartItems);

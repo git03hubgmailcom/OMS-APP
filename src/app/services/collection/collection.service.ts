@@ -29,14 +29,22 @@ export class CollectionService {
     return this.http.post<Collection>(`${this.apiUrl}/${collection_id}/add-order/${order_id}`, {});
   }
 
+  removeOrder(order_id: number, collection_id: number): Observable<Collection> {
+    return this.http.delete<Collection>(`${this.apiUrl}/${collection_id}/remove-order/${order_id}`, {});
+  }
+
   // CREATE
   createCollection(collection: Collection): Observable<any> {
     return this.http.post<any>(this.apiUrl, collection);
   }
 
   // READ
-  getCollections(user_id: number): Observable<Collection[]> {
-    return this.http.get<Collection[]>(this.apiUrl + '?user_id=' + user_id);
+  getCollections(): Observable<Collection[]> {
+    return this.http.get<Collection[]>(this.apiUrl);
+  }
+
+  getCollectionsOfLoggedUser(user_id: number): Observable<Collection[]> {
+    return this.http.get<Collection[]>(`${this.apiUrl}/user/${user_id}`);
   }
 
   getCollection(id: number): Observable<Collection> {

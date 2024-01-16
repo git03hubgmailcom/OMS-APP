@@ -23,7 +23,7 @@ export class CartComponent implements OnInit{
 
 
   getCartItems(){
-    this.cartItemsService.getCartItems().subscribe((cartItems) => {
+    this.cartItemsService.getCartItems(this.authService.getUserId()).subscribe((cartItems) => {
       this.cartItems = cartItems;
       console.log(this.cartItems);
       console.log(this.getTotal(this.cartItems, 'total_price'));

@@ -7,6 +7,7 @@
             <a mat-list-item routerLink="/admin-order-list" (click)="toggleSidenav()">Orders</a>
             <a mat-list-item routerLink="/admin-collections" (click)="toggleSidenav()">Collections</a>
 
+
             <a mat-list-item routerLink="/login" (click)="logout()">Logout</a>
             <!-- Add more links as needed -->
         </mat-nav-list>
@@ -24,8 +25,51 @@
                 
         <div class="center-container" style="margin: 1rem auto; max-width:90vw;">
             <div class="center-title">
-                <h1>Order List</h1>
+                <h1>Collection Order List</h1>
             </div>
+
+            <div>
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Date</mat-label>
+                        <input matInput type="text" placeholder="" disabled value="{{collection?collection.date_created:''}}">
+                    </mat-form-field>
+                </div>
+    
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Total Amount</mat-label>
+                        <input matInput type="text" placeholder="" disabled [(ngModel)]="total_price">
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Status</mat-label>
+                        <input matInput type="text" placeholder="" disabled value="{{collection?collection.status:''}}">
+                    </mat-form-field>
+                </div>
+
+                <button mat-raised-button color="primary" routerLink="/admin-collections" style="margin: 0.5rem;">
+                    Back to Collections
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="keyboard_return"></mat-icon>
+                </button>
+
+                <!-- <button mat-raised-button color="primary" style="margin: 0.5rem;">
+                    Add Order
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+                </button> -->
+
+                <button mat-raised-button color="primary" style="margin: 0.5rem;" (click)="askIfReceive(this.collection)">
+                    Receive Collection
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="payments" ></mat-icon>
+                </button>
+            </div>
+
+            
+
+
+            
 
             <div>
                 <mat-form-field style="margin: 1rem;">
@@ -39,19 +83,19 @@
                     <!-- ID Column -->
                     <ng-container matColumnDef="id">
                         <mat-header-cell *matHeaderCellDef>Order ID</mat-header-cell>
-                        <mat-cell *matCellDef="let order">{{ order.id }}</mat-cell>
+                        <mat-cell *matCellDef="let order">{{ order.order.id }}</mat-cell>
                     </ng-container>
 
                     <!-- Customer Name Column -->
                     <ng-container matColumnDef="customer">
                         <mat-header-cell *matHeaderCellDef>Customer Name</mat-header-cell>
-                        <mat-cell *matCellDef="let order">{{ order.user.first_name }}</mat-cell>
+                        <mat-cell *matCellDef="let order">{{ order.order.user.first_name + " " + order.order.user.last_name }}</mat-cell>
                     </ng-container>
 
                     <!-- Product Column -->
                     <ng-container matColumnDef="totalPrice">
                         <mat-header-cell *matHeaderCellDef>Total Price</mat-header-cell>
-                        <mat-cell *matCellDef="let order">{{ order.total_price }}</mat-cell>
+                        <mat-cell *matCellDef="let order">{{ order.order.total_price }}</mat-cell>
                     </ng-container>
 
                     <!-- Quantity Column -->
@@ -62,7 +106,7 @@
 
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let order">{{ order.date_ordered}}</mat-cell>
+                        <mat-cell *matCellDef="let order">{{ order.date_updated }}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="actions">
@@ -70,9 +114,12 @@
                         <mat-cell *matCellDef="let order">
                             <!-- Add action buttons or links here -->
                             <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                                routerLink="/admin-order-details/{{ order.id }}">
+                                routerLink="/admin-collect-order-details/{{ order.id }}">
                                 <mat-icon>visibility</mat-icon>
                             </button>
+                            <!-- <button class="ml-2" mat-mini-fab color="warn" aria-label="Example icon button with a delete icon" (click)="askIfDelete(this.collection, order.order)">
+                                <mat-icon>delete</mat-icon>
+                            </button> -->
                         </mat-cell>
                     </ng-container>
 

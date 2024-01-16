@@ -5,6 +5,7 @@
             <a mat-list-item routerLink="/accounts" *ngIf="role=='admin'" (click)="toggleSidenav()">Accounts</a>
             <a mat-list-item  routerLink="/admin-menu-list" *ngIf="role=='admin'" (click)="toggleSidenav()">Menu</a>
             <a mat-list-item routerLink="/admin-order-list" *ngIf="role=='admin'" (click)="toggleSidenav()">Orders</a>
+            <a mat-list-item routerLink="/admin-collections" *ngIf="role=='admin'" (click)="toggleSidenav()">Collections</a>
 
             <a mat-list-item routerLink="/my-account" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">My Account</a>
             <a mat-list-item  routerLink="/menu-list" *ngIf="role=='customer' || role=='collector'" (click)="toggleSidenav()">Menu</a>
